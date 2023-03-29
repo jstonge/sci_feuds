@@ -1,6 +1,8 @@
-# Scientific Feuds: Are Scientists Happy? 
+# Scientific Feuds: when too much is too much. 
 
 ## Feuds origin story
+
+`Notes`: Many of these controversies are suggested by gpt-4. As we know that gpt can hallucinate references, they still need to be validated.
 
 #### Nature of the Universe: Steady State vs. Big Bang Theory 
 
@@ -342,10 +344,10 @@
 > there have been debates and questions about the range of validity and the universal applicability of the Glansdorff-Prigogine criterion. Some researchers have raised concerns about the criterion's limitations and applicability, particularly in systems that are far from equilibrium or exhibit complex behavior.
 
 **glansdorff_thermodynamic_1974**: The {Thermodynamic} {Stability} {Theory} of {Non}-{Equilibrium} {States} (Proceedings of the National Academy of Sciences)
+**nicolis_fluctuations_1972**: Fluctuations around nonequilibrium states in open nonlinear systems (Journal of Statistical Physics)
+**keizer_qualms_1974**: Qualms {Regarding} the {Range} of {Validity} of the {Glansdorff}-{Prigogine} {Criterion} for {Stability} of {Non}-{Equilibrium} {States} (Proceedings of the National Academy of Sciences)
 **maes_revisiting_2015**: Revisiting the {Glansdorff}–{Prigogine} {Criterion} for {Stability} {Within} {Irreversible} {Thermodynamics} (Journal of Statistical Physics)
 **ederer_glansdorffprigogine_2011**: The {Glansdorff}–{Prigogine} stability criterion for biochemical reaction networks (Automatica)
-**keizer_qualms_1974**: Qualms {Regarding} the {Range} of {Validity} of the {Glansdorff}-{Prigogine} {Criterion} for {Stability} of {Non}-{Equilibrium} {States} (Proceedings of the National Academy of Sciences)
-**nicolis_fluctuations_1972**: Fluctuations around nonequilibrium states in open nonlinear systems (Journal of Statistical Physics)
 
 
 #### Continental drift vs. Plate Tectonics
@@ -355,8 +357,38 @@
 1. **noauthor_continental_nodate**: Continental {Drift} versus {Plate} {Tectonics} {\\textbar} {National} {Geographic} {Society} (None)
 1. **keith_evidence_2001**: Evidence for a plate tectonics debate (Earth-Science Reviews)
 
+#### Simon vs. Mandelbrot
+
+> The debate began with Mandelbrot's article, "How Long Is the Coast of Britain? Statistical Self-Similarity and Fractional Dimension," in which he introduced the concept of fractal dimension. Simon responded to Mandelbrot's paper with his article, "On Judging the Plausibility of Theories." In this article, Simon critiqued Mandelbrot's approach to the problem of coastline measurement and raised concerns about the generality and applicability of Mandelbrot's methods.
+
+**mandelbrot_final_1961**: Final note on a class of skew distribution functions: {Analysis} and critique of a model due to {H}. {A}. {Simon} (Information and Control)
+**simon_reply_1961**: Reply to “final note” by {Benoit} {Mandelbrot}} (Information and Control)
+**mandelbrot_post_1961**: Post scriptum to “final note” (Information and Control)
+**simon_reply_1961-1**: {Reply to {Dr}. {Mandelbrot}'s post scriptum} (Information and Control)
+**simon_further_1960**: Some further notes on a class of skew distribution functions (Information and Control)
+**mandelbrot_note_1959**: A note on a class of skew distribution functions: {Analysis} and critique of a paper by {H}. {A}. {Simon} (Information and Control)
+**simon_class_1955**: {ON} {A} {CLASS} {OF} {SKEW} {DISTRIBUTION} {FUNCTIONS} (Biometrika)
+
+#### Frequentist vs. Bayesian Statistics:
+
+#stats
+
+> This long-standing debate revolves around two different approaches to statistical inference. Frequentists use the concept of probability to describe the long-run frequency of events, while Bayesians interpret probability as a degree of belief. Frequentist methods, such as null hypothesis significance testing, have been the traditional approach in many fields. However, Bayesian methods have gained popularity in recent years, as they allow for the incorporation of prior knowledge and can produce more intuitive results in some cases. The choice between these approaches often depends on the researcher's philosophical stance and the specific problem at hand.
+
+#### Null Hypothesis Significance Testing (NHST) Controversy:
+
+#stats
+
+>The widespread use of NHST has been the subject of debate among statisticians and researchers. Critics argue that the arbitrary threshold for statistical significance (e.g., p-value < 0.05) can lead to the overemphasis on "significant" results and contribute to the replication crisis in scientific research. Additionally, the interpretation of p-values is often misunderstood, leading to misconceptions about the strength of evidence. In response, some researchers have advocated for alternative methods, such as effect sizes, confidence intervals, or Bayesian approaches.
+
+
+**cohen_earth_1994**: The earth is round (p {\textless} .05). (American Psychologist)
+**wasserstein_asa_2016**: The {ASA} {Statement} on \textit{p} -{Values}: {Context}, {Process}, and {Purpose} (The American Statistician)
+**amrhein_scientists_2019**: Scientists rise up against statistical significance (Nature)
+
 
 #### Misc 
 
 1. **azoulay_does_2019**: Does {Science} {Advance} {One} {Funeral} at a {Time}? (American Economic Review)
+
 

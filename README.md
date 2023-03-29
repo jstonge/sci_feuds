@@ -1,8 +1,9 @@
 # Scientific Feuds: when too much is too much. 
 
+`Notes`: Many of these controversies are suggested by gpt-4. As we know that gpt can hallucinate references, they still need to be validated.
+
 ## Feuds origin story
 
-`Notes`: Many of these controversies are suggested by gpt-4. As we know that gpt can hallucinate references, they still need to be validated.
 
 #### Nature of the Universe: Steady State vs. Big Bang Theory 
 

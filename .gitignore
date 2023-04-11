@@ -5,3 +5,5 @@ data/
 feuds/
 output/*
 etc/apikey.txt
+src/creds.py
+src/get_text.py

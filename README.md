@@ -383,9 +383,9 @@
 >The widespread use of NHST has been the subject of debate among statisticians and researchers. Critics argue that the arbitrary threshold for statistical significance (e.g., p-value < 0.05) can lead to the overemphasis on "significant" results and contribute to the replication crisis in scientific research. Additionally, the interpretation of p-values is often misunderstood, leading to misconceptions about the strength of evidence. In response, some researchers have advocated for alternative methods, such as effect sizes, confidence intervals, or Bayesian approaches.
 
 
-**cohen_earth_1994**: The earth is round (p {\textless} .05). (American Psychologist)
-**wasserstein_asa_2016**: The {ASA} {Statement} on \textit{p} -{Values}: {Context}, {Process}, and {Purpose} (The American Statistician)
-**amrhein_scientists_2019**: Scientists rise up against statistical significance (Nature)
+1. **cohen_earth_1994**: The earth is round (p {\textless} .05). (American Psychologist)
+1. **wasserstein_asa_2016**: The {ASA} {Statement} on \textit{p} -{Values}: {Context}, {Process}, and {Purpose} (The American Statistician)
+1. **amrhein_scientists_2019**: Scientists rise up against statistical significance (Nature)
 
 
 #### Misc 

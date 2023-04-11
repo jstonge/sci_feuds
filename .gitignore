@@ -4,3 +4,4 @@ src/__pycache__/creds.cpython-39.pyc
 data/
 feuds/
 output/*
+etc/apikey.txt

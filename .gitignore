@@ -7,3 +7,4 @@ output/*
 etc/apikey.txt
 src/creds.py
 src/get_text.py
+src/__pycache__/creds.cpython-38.pyc

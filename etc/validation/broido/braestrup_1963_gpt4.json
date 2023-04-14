@@ -1,0 +1,239 @@
+[{
+    "sentences": [
+      {
+        "text": "It may be argued and this is the line taken by W.-E.",
+        "sentiment": 5,
+        "references": [
+          {
+            "text": "W.-E.",
+            "sentiment": 5
+          }
+        ],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": false
+      },
+      {
+        "text": "both in the paper mentioned and in the book under reviewthat Lack's view rests on a mistaken notion of natural selection.",
+        "sentiment": 3,
+        "references": [
+          {
+            "text": "Lack's view",
+            "sentiment": 3
+          }
+        ],
+        "theories": [
+          {
+            "text": "natural selection",
+            "sentiment": 6
+          }
+        ],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      },
+      {
+        "text": "The process of selection works, not only between individuals, but also between groups and between species, thus promoting characters which are to the benefit of the group, even in the face of contrary individual selection which may be kept in check by special devices.",
+        "sentiment": 6,
+        "references": [],
+        "theories": [
+          {
+            "text": "selection",
+            "sentiment": 6
+          }
+        ],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      },
+      {
+        "text": "The existence of such evolutionary mechanisms is not only called for by a great many otherwise unaccountable facts, but is also in accordance with genetic evolutionary theory (see e.g. WRIGHT, 1945) .",
+        "sentiment": 7,
+        "references": [
+          {
+            "text": "WRIGHT, 1945",
+            "sentiment": 6
+          }
+        ],
+        "theories": [
+          {
+            "text": "genetic evolutionary theory",
+            "sentiment": 7
+          }
+        ],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      }
+    ],
+    "sentiment score": 5
+  },
+  {
+    "sentences": [
+      {
+        "text": "Since the bulk of what follows will be in a critical vein, it would be as well to begin by stating that on this main point I am in perfect accordance with Wynne-Edwards.",
+        "sentiment": 5,
+        "references": [
+          {
+            "text": "Wynne-Edwards",
+            "sentiment": 5
+          }
+        ],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      },
+      {
+        "text": "In fact, about 10 years ago, I wrote some books for Scandinavian readers (1952, 1953, and 1954) in which the importance of intergroup selection in connection with many points concerning social adaptation were stressed.",
+        "sentiment": 5,
+        "references": [],
+        "theories": [
+          {
+            "text": "intergroup selection",
+            "sentiment": 6
+          },
+          {
+            "text": "social adaptation",
+            "sentiment": 5
+          }
+        ],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      },
+      {
+        "text": "0. KALELA, who was concerned with the same problems, wrote, simultanously, notes which were still less accessible to most biologists owing to the fact they were written in Finnish.",
+        "sentiment": 4,
+        "references": [
+          {
+            "text": "0. KALELA",
+            "sentiment": 5
+          }
+        ],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": false
+      },
+      {
+        "text": "However, in 1954 he finally published a paper in German which, I think, is up to now one of the best introductions to the topic.",
+        "sentiment": 6,
+        "references": [
+          {
+            "text": "1954",
+            "sentiment": 5
+          }
+        ],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      },
+      {
+        "text": "It may be recommended in cases where critical readers of Wynne-Edwards' book, with little previous knowledge of vertebrate \"socio-ecology\", have been so scared by wild or even absurd theories that they are inclined to throw the baby out with the bath water.",
+        "sentiment": 3,
+        "references": [
+          {
+            "text": "Wynne-Edwards' book",
+            "sentiment": 4
+          }
+        ],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      }
+    ],
+    "sentiment score": 4
+    },
+    {  
+    "sentences": [
+      {
+        "text": "Among biologists who have laid the foundation for the notion of auto-regulating mechanisms, it is easy for Scandinavians to remember our good friend P. L. ERRING-TON, who has again and again, especially in connection with his life-long work on the muskratstressed the decisive influence of the mutual tolerance or aggression of the animals themselves, in regulating numbers.",
+        "sentiment": 6,
+        "references": [
+          {
+            "text": "P. L. ERRING-TON",
+            "sentiment": 5
+          }
+        ],
+        "theories": [
+          {
+            "text": "auto-regulating mechanisms",
+            "sentiment": 6
+          }
+        ],
+        "equations": [],
+        "models": [],
+        "author's view": false
+      },
+      {
+        "text": "His work is only casually mentioned by W.-E.",
+        "sentiment": 4,
+        "references": [
+          {
+            "text": "W.-E.",
+            "sentiment": 5
+          }
+        ],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": false
+      },
+      {
+        "text": "On the whole, considering the enormous size of the book and the many rather peripheral topics treated, it is surprising how incompletely the really pertinent points are reviewed.",
+        "sentiment": 3,
+        "references": [],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      },
+      {
+        "text": "I think it may be said of the book, with a certain amount of truth, that most of what is sound in it is not new, and most of which is new is not sound.",
+        "sentiment": 2,
+        "references": [],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      },
+      {
+        "text": "This in itself might not have been a very serious objection.",
+        "sentiment": 6,
+        "references": [],
+        "theories": [],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      },
+      {
+        "text": "If it had contained a good, well-digested, and balanced summary of facts and views on animals density regulation in relation to social behaviour, together with a clear statement of the problems (and on this foundation a statement of the more extreme theories of the author), it might have been a highly useful book.",
+        "sentiment": 6,
+        "references": [],
+        "theories": [
+          {
+            "text": "density regulation",
+            "sentiment": 6
+          },
+          {
+            "text": "social behaviour",
+            "sentiment": 6
+          },
+          {
+            "text": "extreme theories of the author",
+            "sentiment": 3
+          }
+        ],
+        "equations": [],
+        "models": [],
+        "author's view": true
+      }
+    ],
+    "sentiment score": 4
+  }
+]
+  

@@ -1,0 +1,776 @@
+[
+    {
+        "text": "In 1955 V. C. WYNNE-EDWARDS published a paper on low reproductive rates in certain birds.",
+        "sentiment_score": 6,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "author_view": true,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ]
+    },
+    {
+        "text": "This paper contained important arguments against views expounded with, what appeared to be strict and irrefutable logic, by LACK (e.g. 1954) , viz., that in birds and mammals the number of eggs laid, or young born, corresponds to the largest number of offspring possible to raise.",
+        "sentiment_score": 5,
+        "mentions": [
+            {
+                "sentiment_score": 4,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "D. Lack"
+            }
+        ]
+    },
+    {
+        "text": "It may be argued and this is the line taken by W.-E.",
+        "sentiment_score": 5,
+        "mentions": [
+            {
+                "sentiment_score": 5,
+                "author_view": true,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ]
+    },
+    {
+        "text": "both in the paper mentioned and in the book under reviewthat Lack's view rests on a mistaken notion of natural selection.",
+        "sentiment_score": 3,
+        "mentions": [
+            {
+                "sentiment_score": 2,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "D. Lack"
+            },
+            {
+                "sentiment_score": 4,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "natural selection"
+            }
+        ]
+    },
+    {
+        "text": "The process of selection works, not only between individuals, but also between groups and between species, thus promoting characters which are to the benefit of the group, even in the face of contrary individual selection which may be kept in check by special devices.",
+        "sentiment_score": 5,
+        "mentions": [
+            {
+                "sentiment_score": 5,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "selection"
+            }
+        ]
+    },
+    {
+        "text": "The existence of such evolutionary mechanisms is not only called for by a great many otherwise unaccountable facts, but is also in accordance with genetic evolutionary theory (see e.g. WRIGHT, 1945) .",
+        "sentiment_score": 7,
+        "mentions": [
+            {
+                "sentiment_score": 7,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "evolutionary mechanisms"
+            },
+            {
+                "sentiment_score": 6,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "Wright"
+            },
+            {
+                "sentiment_score": 7,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "genetic evolutionary theory"
+            }
+        ]
+    },
+    {
+        "text": "Since the bulk of what follows will be in a critical vein, it would be as well to begin by stating that on this main point I am in perfect accordance with Wynne-Edwards.",
+        "sentiment_score": 6,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ]
+    },
+    {
+        "text": "In fact, about 10 years ago, I wrote some books for Scandinavian readers (1952, 1953, and 1954) in which the importance of intergroup selection in connection with many points concerning social adaptation were stressed.",
+        "sentiment_score": 5,
+        "mentions": [
+            {
+                "sentiment_score": 5,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "Scandinavian"
+            },
+            {
+                "sentiment_score": 5,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "intergroup selection"
+            },
+            {
+                "sentiment_score": 5,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "social adaptation"
+            }
+        ]
+    },
+    {
+        "text": "0. KALELA, who was concerned with the same problems, wrote, simultanously, notes which were still less accessible to most biologists owing to the fact they were written in Finnish.",
+        "sentiment_score": 4,
+        "mentions": [
+            {
+                "sentiment_score": 3,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "Kalela"
+            },
+            {
+                "sentiment_score": 4,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "Finnish"
+            },
+            {
+                "sentiment_score": 4,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "biologists"
+            }
+        ]
+    },
+    {
+        "text": "However, in 1954 he finally published a paper in German which, I think, is up to now one of the best introductions to the topic.",
+        "sentiment_score": 7,
+        "mentions": [
+            {
+                "sentiment_score": 7,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "German"
+            }
+        ]
+    },
+    {
+        "text": "It may be recommended in cases where critical readers of Wynne-Edwards' book, with little previous knowledge of vertebrate \"socio-ecology\", have been so scared by wild or even absurd theories that they are inclined to throw the baby out with the bath water.",
+        "sentiment_score": 4,
+        "mentions": [
+            {
+                "sentiment_score": 4,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ]
+    },
+    {
+        "text": "Among biologists who have laid the foundation for the notion of auto-regulating mechanisms, it is easy for Scandinavians to remember our good friend P. L. ERRING-TON, who has again and again, especially in connection with his life-long work on the muskratstressed the decisive influence of the mutual tolerance or aggression of the animals themselves, in regulating numbers.",
+        "sentiment_score": 6,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "Scandinavians"
+            },
+            {
+                "sentiment_score": 6,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "P. L. Errington"
+            },
+            {
+                "sentiment_score": 6,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "muskrat"
+            }
+        ]
+    },
+    {
+        "text": "His work is only casually mentioned by W.-E.",
+        "sentiment_score": 3,
+        "mentions": [
+            {
+                "sentiment_score": 4,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ]
+    },
+    {
+        "text": "On the whole, considering the enormous size of the book and the many rather peripheral topics treated, it is surprising how incompletely the really pertinent points are reviewed.",
+        "sentiment_score": 3,
+        "mentions": []
+    },
+    {
+        "text": "I think it may be said of the book, with a certain amount of truth, that most of what is sound in it is not new, and most of which is new is not sound.",
+        "sentiment_score": 2,
+        "mentions": []
+    },
+    {
+        "text": "This in itself might not have been a very serious objection.",
+        "sentiment_score": 5,
+        "mentions": []
+    },
+    {
+        "text": "If it had contained a good, well-digested, and balanced summary of facts and views on animals density regulation in relation to social behaviour, together with a clear statement of the problems (and on this foundation a statement of the more extreme theories of the author), it might have been a highly useful book.",
+        "sentiment_score": 8,
+        "mentions": [
+            {
+                "sentiment_score": 8,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "animals density regulation"
+            },
+            {
+                "sentiment_score": 8,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "social behaviour"
+            }
+        ]
+    },
+    {
+        "text": "Instead, it is propagandistic with all the evil consequences of misplaced enthusiasm.",
+        "sentiment_score": 1,
+        "mentions": []
+    },
+    {
+        "text": "It may of course be read in a leisurely way for the sake of the many interesting details given, but the reader who is eager to discover what exactly the author's theories are, and what evidence he uses to base them on, will find himself frustrated and irritated long before he is through with it.",
+        "sentiment_score": 3,
+        "mentions": [
+            {
+                "sentiment_score": 3,
+                "author_view": true,
+                "source": "Braestrup",
+                "target": "author's theories"
+            },
+            {
+                "sentiment_score": 3,
+                "author_view": false,
+                "source": "Braestrup",
+                "target": "evidence"
+            }
+        ]
+    },
+    {
+        "text": "The author starts off with a rather convincing statement of the fundamental problem.",
+        "sentiment_score": 8,
+        "mentions": []
+    },
+    {
+        "text": "He points out that there must be an optimum density of each species.",
+        "sentiment_score": 7,
+        "mentions": []
+    },
+    {
+        "text": "Growth of a predator-population above a certain level can lead to over-exploitation of its resources, exemplified by the ravages caused by human 'overfishing'.",
+        "sentiment_score": 2,
+        "mentions": []
+    },
+    {
+        "text": "It is characteristic that the exploitation of a stock of whales or fish may still be very profitable even at a time when the stock begins to suffer depletion.",
+        "sentiment_score": 4,
+        "mentions": []
+    },
+    {
+        "text": "Before the pressure of the hunt decreases owing to diminished returns, the stock may already be lastingly damaged (northern right whales!).",
+        "sentiment_score": 2,
+        "mentions": [
+            {
+                "sentiment_score": 2,
+                "source": "Braestrup",
+                "target": "northern right whales"
+            }
+        ]
+    },
+    {
+        "text": "In any case the productivity will decline.",
+        "sentiment_score": 3,
+        "mentions": []
+    },
+    {
+        "text": "The remedy is to determine the approximate optimum yield and limit the effort to match it ('fish less and catch more').",
+        "sentiment_score": 7,
+        "mentions": []
+    },
+    {
+        "text": "\u201cThe importance of these inferences lies, of course, in the fact that there is no difference in principle between man exploiting fish or whales and any other predator exploiting any other prey.",
+        "sentiment_score": 7,
+        "mentions": []
+    },
+    {
+        "text": "It is impossible to escape the conclusion, therefore, that something must, in fact, constantly restrain them, while in the midst of plenty, from over-exploiting their prey.",
+        "sentiment_score": 2,
+        "mentions": []
+    },
+    {
+        "text": "Somehow or other 'free enterprise' or unchecked competition for food must be successfully averted, otherwise 'overfishing' would be impossible to escape: this could only result in lasting detriment to the predators and the risk, if they persisted in it, that the prey might be exterminated altogether.",
+        "sentiment_score": 2,
+        "mentions": []
+    },
+    {
+        "text": "The author goes on to say that in general the same applies as forcibly to herbivores as to carnivores.",
+        "sentiment_score": 3,
+        "mentions": []
+    },
+    {
+        "text": "Now, while this may of course, be broadly true, civilized man's exploitation by means of highly perfected mechanical devices has, on the other hand, certain peculiar traits.",
+        "sentiment_score": 3,
+        "mentions": []
+    },
+    {
+        "text": "Further, I think too little notice is taken of the fact that at least some species are prevented from over-exploitation of resources by limiting factors other than 'intrinsic' ones, and, finally, it must be remembered that the problem is greatly complicated by the sharing of the same resources by several species.",
+        "sentiment_score": 5,
+        "mentions": []
+    },
+    {
+        "text": "The author has provided an answer to the last point, but I do not think it is a correct one (see below).",
+        "sentiment_score": 1,
+        "mentions": []
+    },
+    {
+        "text": "In any case, the probability, or even certainty, that auto-regulation of numbers is in the interest of species, is of value merely as an inducement to look for such devices.",
+        "sentiment_score": 6,
+        "mentions": []
+    },
+    {
+        "text": "The author has brought together much good evidence, but his enthusiasm has, I think, very often carried him too far and it has given him a peculiarly one-sided outlook.",
+        "sentiment_score": 2,
+        "mentions": []
+    },
+    {
+        "text": "As far as primitive man is concerned the notion of optimum numbers, auto-regulation of populations, and even the importance of intergroup selection, was already formulated by CARR-SAUNDERS in 1922 in a book which is fully cited by Wynne-Edwards.",
+        "sentiment_score": 7,
+        "mentions": [
+            {
+                "sentiment_score": 8,
+                "source": "Braestrup",
+                "target": "Carr-Saunders"
+            },
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ]
+    },
+    {
+        "text": "Carr-Saunders pointed out that territoriality is of great importance even among the most primitive races of mankind.",
+        "sentiment_score": 5,
+        "mentions": [
+            {
+                "sentiment_score": 8,
+                "source": "Braestrup",
+                "target": "Carr-Saunders"
+            }
+        ]
+    },
+    {
+        "text": "Nowadays it is well known that 'private ownership of land' is a widespread phenomenon, especially among birds and mammals.",
+        "sentiment_score": 5,
+        "mentions": []
+    },
+    {
+        "text": "The role of territoriality in imposing a ceiling on population density is now generally admitted, especially in cases where food for the individual (or pair) in possession is wholly or to a large extent found in the territory.",
+        "sentiment_score": 7,
+        "mentions": []
+    },
+    {
+        "text": "W.-E. maintains that where there is a 'colonial system of property tenure' the size of the colony may be determined by 'convention', ensuring that only a limited number can breed.",
+        "sentiment_score": 7,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ]
+    },
+    {
+        "text": "This theory, for which there is rather good evidence, especially in rooks, seems to me one of the most valuable novel suggestions in the book.",
+        "sentiment_score": 8,
+        "mentions": [
+            {
+                "sentiment_score": 8,
+                "source": "Braestrup",
+                "target": "rooks"
+            }
+        ]
+    },
+    {
+        "text": "Teritoriality is also known in some fish and arthropods.",
+        "sentiment_score": 5,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": "Unknown"
+    },
+    {
+        "text": "Good evidence for true hierarchies in lower vertebrates and in invertebrates is meagre.",
+        "sentiment_score": 3,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": "Unknown"
+    },
+    {
+        "text": "Nevertheless, the author is at considerable pains to push the beginning of competition for conventional goals very far back in the animal kingdom.",
+        "sentiment_score": 5,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": "Unknown"
+    },
+    {
+        "text": "It is his theory that \"it is precisely in this ... that social organisation and the primitive seeds of all social behaviour have their origin\", \". . . a society can be defined for our purposes as an organisation capable of providing conventional competition: this, at least, appears to be its original, most primitive function, which indeed survives more or less thinly veiled even in the civilised societies of man.",
+        "sentiment_score": 6,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": true
+    },
+    {
+        "text": "The social organisation is originally set up, therefore, to provide the feed-back for the homeostatic machine\" (p. 14).",
+        "sentiment_score": 5,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": true
+    },
+    {
+        "text": "The author seems to have arrived at this highly improbable conclusion by a deplorable propensity to include very different phenomena under the same heading.",
+        "sentiment_score": 2,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "At least, he often fails to take account of very deep seated dissimilarities.",
+        "sentiment_score": 2,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "For instance, the follow-my-leader reaction of the processionary caterpillars is mentioned as an example of (inborn) conventional behaviour (p. 449), and on p. 127 we find the following sentences: \"the barnacle larva which at metamorphosis fixes itself or is inhibited from doing so, depending on the presence and number of other barnacle larvae already attached, is responding socially in a way that is not effectively different in principle from the one which animates the communal behaviour of the social insects or the most highly socialised birds and mammals.",
+        "sentiment_score": 3,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "In each case the behaviour of the individual is conditioned by the presence and actions of other members of the population in the interests of regulating the dispersion of the group as a whole.'\"",
+        "sentiment_score": 5,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "The fact that large tadpoles produce substances that powerfully inhibit or arrest the growth of small tadpoles (p. 558) is highly interesting as a 'homeostatic mechanism', but, as far as one can see, it has nothing to do with 'conventional competition'.",
+        "sentiment_score": 4,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "The same may be said of most of the well-attested cases of auto-regulation in animals other than birds and mammals.",
+        "sentiment_score": 4,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "Some of the best evidence comes from experiments with guppies (Lebistes).",
+        "sentiment_score": 6,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Breder and Coates"
+            }
+        ],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "If a colony is started in a tank containing a certain amount of water and with ample food, the final population (biomass) will always be of the same size (about 32 grams fish in 17 litres of water).",
+        "sentiment_score": 6,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "If too many adults were added, some of them died for unknown reasons \"without symptom of disease, injury, or other tangible effect\" (BREDER and COATES, 1932, p. 149) , and if, e. g., a single female was added in, the young were devoured after the limit was reached.",
+        "sentiment_score": 4,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Breder and Coates"
+            }
+        ],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "W.-E.",
+        "sentiment_score": 5,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "writes (p. 543) that the adults too consumed each other in the experiment made by Breder and Coates, but this seems to be a misunderstanding.",
+        "sentiment_score": 3.5,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Breder and Coates"
+            }
+        ],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "There is here a very interesting complication, which seems to have escaped W.-E.'s attention (this may be just as well, considering what he might have made of it!).",
+        "sentiment_score": 5,
+        "mentions": [
+            {
+                "sentiment_score": 5,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "In all Ostariophysi (thus including guppies, and, in fact, most freshwater fishes) the skin contains a substance which, when released into the water (e.g. when one of the school is eaten by a predator), brings about a characteristic reaction of alarm in other members of the same or related species.",
+        "sentiment_score": 6,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "This reaction protects the older fish from predatory attack.",
+        "sentiment_score": 6,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "Since its discovery in 1938 by KARL VON FRISCH this 'Schreckreaktion' has received a considerable amount of study (recently reviewed by PFEIFFER, 1962 ).",
+        "sentiment_score": 5,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Karl Von Frisch"
+            },
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Pfeiffer"
+            }
+        ],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "Of course this will also prevent cannibalism, or, at least, will make it improbable in adults.",
+        "sentiment_score": 5,
+        "mentions": [],
+        "model": "Unknown",
+        "equation": "Unknown",
+        "author_view": false
+    },
+    {
+        "text": "However, the author's favourite means for carrying such notions far back into the animal kingdom is the postulation of what he calls epideictic manifestations, instruments presumed to assess the population's own density and for becoming appropriately conditioned by it. The result of this conditioning is supposed to be control of the subsequent breeding output or dispersionary measures by emigration and the like.",
+        "sentiment_score": 5,
+        "mentions": [],
+        "equation": null,
+        "model": null,
+        "author_view": true
+    },
+    {
+        "text": "Gatherings of the most diverse kinds are believed to have this function: communal nuptial displays, 'leks', aggregations for social roosting or hibernationeven the vertical migration of planktonic animals! The latter are thought to concentrate near the surface at fixed times of the day for 'epideictic' reasons.",
+        "sentiment_score": 6,
+        "mentions": [],
+        "equation": null,
+        "model": null,
+        "author_view": true
+    },
+    {
+        "text": "It is difficult, to say the least, to see how this conditioning could come about and in what way it could influence the reproductive output. The bogong moth, to take an example, (p. 314), forms immense aestivating aggregations in clefts and caves of granite outcrops on selected mountain tops in the Australian Alps of New South Wales. What difference would it make for the single moth (even with so much milling around) whether there be one or two million moths present in a particular year, and how could this influence its subsequent reproductive output?",
+        "sentiment_score": 3,
+        "mentions": [],
+        "equation": null,
+        "model": null,
+        "author_view": true
+    },
+    {
+        "text": "As a reason for believing that assemblages of this kind must have some special significance, the author maintains that, even if the finding of especially favoured sites for hibernation or roosting may thus be ensured, the gatherings may be harmful in making the population in question more vulnerable to predatory attack. Dr. ELLINOR BRO LARSEN has suggested to me an explanation involving exactly the opposite view. In her experience, even if a particular insect species is acceptable to a particular predator, protracted feeding experiments often show that the predator cannot eat more than a few individuals, it refuses to take more, and it may even show evidence of ill-effects. Thus, the prey-species in question appears to be mildly poisonous (e.g. various ladybirds and some collembola). In such cases the population may be better protected by being massed together, even if the animals are easier to find than in cases of individual hibernation or roosting.",
+        "sentiment_score": 7,
+        "mentions": [
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Ellinor Bro Larsen"
+            }
+        ],
+        "equation": null,
+        "model": null,
+        "author_view": true
+    },
+    {
+        "text": "In many cases gatherings (usually with displays) of animals certainly have a special social significance, but I think that the hitherto favoured explanation, viz. that they help to effect the partitioning of the species into more or less discrete populations, is the correct one (to have group-selection we must have groups). This problem will be treated in a special publication (BRAESTRUP 1963) , to which a criticism of W.-E.'s peculiar views concerning the role of the males in regulating fecundity will also be deferred.",
+        "sentiment_score": 6,
+        "mentions": [
+            {
+                "sentiment_score": 7,
+                "source": "Braestrup",
+                "target": "Braestrup"
+            },
+            {
+                "sentiment_score": 3,
+                "source": "Braestrup",
+                "target": "Wynne-Edwards"
+            }
+        ],
+        "equation": null,
+        "model": null,
+        "author_view": true
+    },
+    {
+        "text": "Just one more example of animal aggregations must be mentioned owing to a curious statement in the description of the swarming of whirligig beetles (Gyrinidae). It is said of them that 'their food is obtained entirely beneath the surface' (p. 77). This could give the impression that their interesting specializations for life at the water surface could be entirely for the sake of social integration. But in fact they take at least most of their food at the surface (see e.g. WESENBERG-LUND 1943. p. 317) .Perhaps there is confusion here with the behaviour of the larvae?",
+        "sentiment_score": 5,
+        "mentions": [
+            {
+                "sentiment_score": 5,
+                "source": "Braestrup",
+                "target": "Gyrinidae"
+            },
+            {
+                "sentiment_score": 6,
+                "source": "Braestrup",
+                "target": "Wesenberg-Lund"
+            }
+        ],
+        "equation": null,
+        "model": null,
+        "author_view": true
+    },
+    {
+        "text": "We now come, finally, to that part of the book which, in my opinion, deserves the most violent opposition. I am alluding, of course, to the idea of an 'understanding' between competitors for the same resources. By interspecific conventions an auto-regulatory mechanism for two or several species together should be built up, similar to that existing within single species. This is sometimes believed to be so to the extent of presenting 'a radical antithesis to Gause's hypothesis that animals of similar ecology cannot survive together in the same habitat' (p. 18).",
+        "sentiment_score": 2,
+        "mentions": [
+            {
+                "sentiment_score": 3,
+                "source": "Braestrup",
+                "target": "Gause"
+            }
+        ],
+        "equation": null,
+        "model": null,
+        "author_view": true
+    },
+    {
+        "text": "Of various closely related species which are difficult to tell apart by visual means (e.g. the species of Vespula) the author thinks that the resemblance may have been evolved, partly at least, for the sake of mutual integration. Among the examples mentioned we find, somewhat surprisingly, bees of the genus Halictus, of which there are many very similar species (some of them show beginnings of sociality, but this seems immaterial in the present connection). Sometimes very similar species nest together. It is apparently forgotten that in these bees an egg is never laid until food has been gathered for the larva in question, and furthermore the resources, honey and pollen, are not easily depleted, so here additional regulating mechanisms seem quite unnecessary.",
+        "sentiment_score": 6,
+        "mentions_or_references": [
+            {
+                "text": "Vespula",
+                "sentiment_score": 5,
+                "author_view": true
+            },
+            {
+                "text": "Halictus",
+                "sentiment_score": 7,
+                "author_view": true
+            }
+        ],
+        "equation": "sentiment_score = 6 + (5 + 7) / 2 * 0.2",
+        "model": "linear",
+        "author_view": true
+    },
+    {
+        "text": "The author starts off these sections with an account of interspecific territoriality in birds, and in this way he endeavours to pave a less forbidding path to the rather hazardous theories which follow. Some semantic obscurities are also involved. I am certainly not, of course, accusing the author of intentionally confusing the issue. He is obviously honest in his endeavours to persuade the reader of the truth as he sees it. But it is a fact that the ambiguous use (in these and some other chapters) of the terms 'dispersion' and 'dispersive' tends to make it easier for the reader to swallow certain theories which with more exact presentation he would have left alone.",
+        "sentiment_score": 2,
+        "mentions_or_references": [],
+        "equation": "sentiment_score = 2",
+        "model": "linear",
+        "author_view": false
+    },
+    {
+        "text": "The term dispersion has been borrowed from LACK (1954, p. 264) where it means the non-random type of distribution of a species (of birds in particular) within suitable habitats. As a rule, it is easy to see that individuals are dispersed in an appropriate way with respect to food-supply, and Lack himself was in some doubt as to how this was brought about. Obviously there is some involvement here of the habitat selection mechanism, i.e. the mechanism that leads populations into the habitat where, in the long run, they are able to compete. It may even be impossible to make a clear-cut division between these concepts, but the emphasis is somewhat different. This is not discussed in the book. W.-E. merely writes (p. 1) that dispersion may be defined to include habitat selection. There is no review of present knowledge of habitat selection, e.g. in birds. This is rather unimportant, however, in comparison with the failure in some sections of the book, to distinguish between dispersion and regulation of (total) numbers. This looseness of usage is already inherent in the title of the book (which is in fact concerned with the entire problem of numbers) and in the expression 'the dispersion hypothesis' or 'the theory of dispersion' (e.g. p. 21) pertaining to the author's (or Carr-Saunders') views. On p. 49 we read of \"dispersive responses, either by immediate movement of individuals, or by delayed action on recruitment rate\". A few lines previous to this (p. 48), it is said of an 'epideictic display' that it is \"concerned with dispersion and the regulation of numbers\", which seems to imply a distinction between these concepts. We thus have on the one hand dispersion sensu strictu, and on the other hand dispersion in a wide sense, practically synonymous with regulation of numbers. On many occasions one has to simply guess which is meant, and the reader may be carried imperceptibly from one concept to the other.",
+        "sentiment_score": 4,
+        "mentions_or_references": [
+            {
+                "text": "LACK",
+                "sentiment_score": 5,
+                "author_view": false
+            },
+            {
+                "text": "Carr-Saunders",
+                "sentiment_score": 2,
+                "author_view": true
+            },
+            {
+                "text": "STRESEMANN",
+                "sentiment_score": 6,
+                "author_view": false
+            }
+        ],
+        "equation": "sentiment_score = 4 + (5 + 2 + 6) / 3 * 0.2",
+        "model": "linear",
+        "author_view": false
+    },
+    {
+        "text": "However, after this necessary digression, we may revert to the question of competition between different species for the same food. In birds, where a great deal is known on this question, (LACK 1944, cf . also e.g. STRESEMANN 1948) , closely related species usually differ in exploiting different habitats or different parts of the same habitat.",
+        "sentiment_score": 7,
+        "mentions_or_references": [
+            {
+                "text": "LACK",
+                "sentiment_score": 5,
+                "author_view": false
+            },
+            {
+                "text": "STRESEMANN",
+                "sentiment_score": 6,
+                "author_view": false
+            }
+        ],
+        "equation": "sentiment_score = 7 + (5 + 6) / 2 * 0.2",
+        "model": "linear",
+        "author_view": false
+    }
+]

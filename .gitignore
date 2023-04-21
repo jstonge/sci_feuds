@@ -3,7 +3,8 @@ README.html
 src/__pycache__/creds.cpython-39.pyc
 data/
 feuds/
-output/*
+output/group_selection*
+output/groupSel_feud.csv
 etc/apikey.txt
 src/creds.py
 src/get_text.py

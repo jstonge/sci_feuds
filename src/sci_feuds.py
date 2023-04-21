@@ -241,6 +241,10 @@ def install_addon(self, path, temporary=False) -> str:
 # ----------------------------------------------------------------------------- #
 
 def update_paper_from_s2orc():
+    """
+    As we add new papers to a feud, we want to get their citation graph
+    without rerunning those that we already have
+    """
     # Step 1. Get feud seeds metadata
     get_seeds_fight_papers()
 
@@ -263,8 +267,9 @@ update_paper_from_s2orc()
 
 # -------------------- Scrapping group selection feud ------------------------- #
 
+
 # Since paper coverage for group selection feud is not great, we need to scrape
-# the PDFs and parse them. This is time consuming.
+# the PDFs and parse them. This is time consuming and we do it semi-manually.
 
 
 with jsonlines.open("../data/seeds_fights_papers.jsonl") as f:

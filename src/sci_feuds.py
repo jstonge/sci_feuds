@@ -1,34 +1,31 @@
-import requests
-from jsonlines import jsonlines
-from pathlib import Path
-import sys
-from bson import json_util
+import base64
 import json
-import shutil
+import os
 import re
+import shutil
+import sys
+import zipfile
+from collections import Counter
+from io import BytesIO
+from pathlib import Path
 from textwrap import wrap
-from creds import client
+from time import sleep
+
 import bibtexparser
+import matplotlib.pyplot as plt
 import pandas as pd
-
-
+import requests
+import seaborn as sns
+from bson import json_util
+from jsonlines import jsonlines
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import os
-from io import BytesIO
-import zipfile
-import base64
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-from collections import Counter
-
-
-from time import sleep
+from creds import client
 
 sys.path.append("../../s2orc_helpers/s2orc_helpers")
 
-from s2orc_helpers import parse_res, parse_bibref
+from s2orc_helpers import parse_bibref, parse_res
 
 ROOT_DIR = Path("../")
 PDF_DIR = ROOT_DIR / 'data' / 'raw_pdfs'

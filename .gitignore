@@ -10,3 +10,10 @@ src/creds.py
 src/get_text.py
 src/__pycache__/creds.cpython-38.pyc
 src/apikey.txt
+output/spacy_group_selection_grobid/*
+output/train_cca.jsonl
+output/test_cca.jsonl
+output/train_stance_prepared.jsonl
+output/train_stance.jsonl
+output/test_stance.jsonl
+output/project-25-at-2023-04-26-16-26-86cb0a7a.json

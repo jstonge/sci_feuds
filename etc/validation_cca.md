@@ -1,0 +1,8 @@
+
+```zsh
+given: 2 The evaluation is then performed on sentences with "agreement attractors" in which at there is at least one noun between the verb and its subject, and all of the nouns between the verb and subject are of the opposite number from the subject. Gulordava et al. (2018) also start with existing sentences. However, in order to control for the possibillity of the model learning to rely on "semantic" selectional-preferences cues rather than syntactic ones, they replace each content word with random words from the same part-ofspeech and inflection. This results in "coloreless green ideas" nonce sentences. The evaluation is then performed similarly to the LM setup of <cite>Linzen et al. (2016)</cite> : the sentence is fed into a pretraiend LSTM LM up to the focus verb, and the model is considered correct if the probability assigned to the correct inflection of the original verb form given the prefix is larger than that assigned to the incorrect inflection.
+
+target: The evaluation is then performed similarly to the LM setup of <cite>Linzen et al. (2016)</cite> : the sentence is fed into a pretraiend LSTM LM up to the focus verb, and the model is considered correct if the probability assigned to the correct inflection of the original verb form given the prefix is larger than that assigned to the incorrect inflection.
+
+reply: The evaluation is then performed similarly to the LM setup of <cite>Linzen et al. (2016)</cite> : the sentence is fed into a pretraiend LSTM LM up to the focus verb, and the model is considered correct if the probability assigned to the correct inflection of the original verb form given the prefix is larger than that assigned to the incorrect inflection.
+```

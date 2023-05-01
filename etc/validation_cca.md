@@ -1,4 +1,10 @@
 
+- model_name: "curie:ft-personal-2023-05-01-19-28-15"
+- given: what was given to the model
+- target: gold label gave by https://github.com/allenai/multicite
+- reply: what our fine-tune model gave back
+
+On short target, the model is good:
 ```zsh
 given: 2 The evaluation is then performed on sentences with "agreement attractors" in which at there is at least one noun between 
 the verb and its subject, and all of the nouns between the verb and subject are of the opposite number from the subject. Gulordava 
@@ -63,3 +69,59 @@ model by removing all the convolution layers.
 reply: We then evaluated the impact of the 1D convolution layers in our <cite>transformer</cite> 
 model by removing all the convolution layers.
 ```
+
+But our fine-tune model fails often when it takes into account multi-sentences contexts:
+
+```zsh
+given: [AMRs can be seen as graphs connecting concepts by relations. Each concept is represented 
+by a named instance. Co-reference is established by re-using these instances. For example, the 
+AMRs corresponding to examples (1) and (2) above are given in Figure 1 . Note that, due to the 
+bracketing, the variable b encapsulates the whole entity person :name "Bob" and not just person, 
+i.e. b stands for a person with the name Bob. That there is a lot to gain in this area can be 
+seen by applying the AMR evaluation suite of Damonte et al. (2017) , which calculates nine 
+different metrics to evaluate AMR parsing, reentrancy being one of them. [Out of the four 
+systems that made these scores available (all scores reported in<cite> van Noord and Bos (2017)</cite> ), 
+the reentrancy metric obtained the lowest F-score for three of them.]]
+
+target: AMRs can be seen as graphs connecting concepts by relations. Each concept is represented by a 
+named instance. Co-reference is established by re-using these instances. For example, the AMRs 
+corresponding to examples (1) and (2) above are given in Figure 1 . Note that, due to the bracketing, 
+the variable b encapsulates the whole entity person :name "Bob" and not just person, i.e. b stands 
+for a person with the name Bob. That there is a lot to gain in this area can be seen by applying 
+the AMR evaluation suite of Damonte et al. (2017) , which calculates nine different metrics to 
+evaluate AMR parsing, reentrancy being one of them. Out of the four systems that made these scores 
+available (all scores reported in<cite> van Noord and Bos (2017)</cite> ), the reentrancy metric 
+obtained the lowest F-score for three of them.
+
+reply: Out of the four systems that made these scores available (all scores reported in<cite> van 
+Noord and Bos (2017)</cite> ), the reentrancy metric obtained the lowest F-score for three of them.
+```
+```zsh
+given: On the other hand, there exist approaches that mine comparable corpora without any 
+prior translation information or parallel data. [[Examples of this approach are rarer, and 
+we briefly mention two: Enright and Kondrak (2007) use singleton words (hapax legomena) to 
+represent documents in a bilingual collection for the task of detecting document translation 
+pairs, and <cite>Krstovski and Smith (2011)</cite> construct a vocabulary of overlapping 
+words to represent documents in multilingual collections.] The latter approach demonstrates 
+high precision vs. recall values on various language pairs from different languages and 
+writing systems when detecting translation pairs on a document level such as Europarl 
+sessions. Recently proposed approaches, such as (Klementiev et al., 2012) use monolingual 
+corpora to estimate phrase-based SMT parameters. Unlike our paper, however, they do not 
+demonstrate an end-toend SMT system trained without any parallel data.]
+
+target: Examples of this approach are rarer, and we briefly mention two: Enright and Kondrak 
+(2007) use singleton words (hapax legomena) to represent documents in a bilingual collection 
+for the task of detecting document translation pairs, and <cite>Krstovski and Smith (2011)</cite> 
+construct a vocabulary of overlapping words to represent documents in multilingual collections. 
+The latter approach demonstrates high precision vs. recall values on various language pairs from 
+different languages and writing systems when detecting translation pairs on a document level 
+such as Europarl sessions. Recently proposed approaches, such as (Klementiev et al., 2012) 
+use monolingual corpora to estimate phrase-based SMT parameters. Unlike our paper, however, 
+they do not demonstrate an end-toend SMT system trained without any parallel data.
+
+reply: Examples of this approach are rarer, and we briefly mention two: Enright and Kondrak (2007) 
+use singleton words (hapax legomena) to represent documents in a bilingual collection for the task 
+of detecting document translation pairs, and <cite>Krstovski and Smith (2011)</cite> construct a 
+vocabulary of overlapping words to represent documents in multilingual collections.
+```
+It feels like we have created a good citation context classifier for single sentences. 

@@ -1,8 +1,8 @@
 
-- model_name: "curie:ft-personal-2023-05-01-19-28-15"
-- given: what was given to the model
-- target: gold label gave by https://github.com/allenai/multicite
-- reply: what our fine-tune model gave back
+- `model_name`: "curie:ft-personal-2023-05-01-19-28-15"
+- `given`: what was given to the model
+- `target`: gold label gave by https://github.com/allenai/multicite
+- `reply`: what our fine-tune model gave back
 
 On short target, the model is good:
 ```zsh
@@ -125,3 +125,67 @@ of detecting document translation pairs, and <cite>Krstovski and Smith (2011)</c
 vocabulary of overlapping words to represent documents in multilingual collections.
 ```
 It feels like we have created a good citation context classifier for single sentences. 
+
+---
+- `model_name`: "curie:ft-personal-2023-05-01-23-05-22"
+- n=4777 (with majority of gold snippets being >50 word count) 
+
+We fine-tuned again but now focusing on larger documents. It might be getting better?
+
+```zsh
+given: It is hence clear that one cannot learn all these diverse relations from the very small 
+amounts of available training data. Instead, we would have to learn a more general representation 
+of discourse expectations. Many recent discourse relation classification approaches have focused
+on cross-lingual data augmentation , training models to better represent the relational arguments 
+by using various neural network models, including feed-forward network (Rutherford et al., 2017) , 
+convolutional neural networks (Zhang et al., 2015) , recurrent neural network 
+(Ji et al., 2016;<cite> Bai and Zhao, 2018)</cite> , character-based (Qin et al., 2016) or formulating 
+relation classification as an adversarial task (Qin et al., 2017) . These models typically use 
+pre-trained semantic embeddings generated from language modeling tasks, like Word2Vec (Mikolov et al., 2013) , 
+GloVe (Pennington et al., 2014) and ELMo (Peters et al., 2018) . However, previously proposed neural models 
+still crucially lack a representation of the typical relations between sentences: to solve the task properly,
+a model should ideally be able to form discourse expectations, i.e., to represent the typical causes, 
+consequences, next events or contrasts to a given event described in one relational argument, and then 
+assess the content of the second relational argument with respect to these expectations (see Example 1).
+
+target: Many recent discourse relation classification approaches have focused on cross-lingual data 
+augmentation , training models to better represent the relational arguments by using various neural 
+network models, including feed-forward network (Rutherford et al., 2017) , convolutional neural 
+networks (Zhang et al., 2015) , recurrent neural network (Ji et al., 2016;<cite> Bai and Zhao, 2018)</cite> , 
+character-based (Qin et al., 2016) or formulating relation classification as an adversarial task (Qin et al., 2017) . 
+However, previously proposed neural models still crucially 
+lack a representation of the typical relations between sentences: to solve the task properly, a model 
+should ideally be able to form discourse expectations, i.e., to represent the typical causes, consequences, 
+next events or contrasts to a given event described in one relational argument, and then assess the content 
+of the second relational argument with respect to these expectations (see Example 1).
+
+reply: Many recent discourse relation classification approaches have focused on cross-lingual data augmentation , 
+training models to better represent the relational arguments by using various neural network models, including 
+feed-forward network (Rutherford et al., 2017) , convolutional neural networks (Zhang et al., 2015) , 
+recurrent neural network (Ji et al., 2016;<cite> Bai and Zhao, 2018)</cite> , character-based (Qin et al., 2016) 
+or formulating relation classification as an adversarial task (Qin et al., 2017) . However, previously 
+proposed neural models still crucially lack a representation of the typical relations between sentences: 
+to solve the task properly, a model should ideally be able to form discourse expectations, i.e., to 
+represent the typical causes, consequences, next events or contrasts to a given event described in one 
+relational argument, and then assess the content of the second relational argument with respect to 
+these expectations (see Example 1).
+```
+
+Sometimes, it is unclear whether the model or the annotate is right:
+
+```zsh
+given: However, convolutional models must be significantly deeper to retrieve the same temporal receptive 
+field [23] . Recently, the mechanism of self-attention<cite> [22,</cite> 24] was proposed, which uses the 
+whole sequence at once to model feature interactions that are arbitrarily distant in time. Its use in both 
+encoder-decoder and feedforward contexts has led to faster training and state-of-the-art results in 
+translation (via the Transformer<cite> [22]</cite> ), sentiment analysis [25] , and other tasks. 
+These successes have motivated preliminary work in self-attention for ASR. Time-restricted self-attention 
+was used as a drop-in replacement for individual layers in the state-of-theart lattice-free MMI model [26] , 
+an HMM-NN system.
+
+target: Its use in both encoder-decoder and feedforward contexts has led to faster training and state-of-the-art 
+results in translation (via the Transformer<cite> [22]</cite> ), sentiment analysis [25] , and other tasks.
+
+reply: Recently, the mechanism of self-attention<cite> [22,</cite> 24] was proposed, which uses the whole 
+sequence at once to model feature interactions that are arbitrarily distant in time. Its use in both encoder-decoder and feedforward contexts
+```

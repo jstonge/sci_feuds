@@ -1,4 +1,3 @@
-
 - `model_name`: "curie:ft-personal-2023-05-01-19-28-15"
 - `given`: what was given to the model
 - `target`: gold label gave by https://github.com/allenai/multicite
@@ -171,7 +170,8 @@ relational argument, and then assess the content of the second relational argume
 these expectations (see Example 1).
 ```
 
-Sometimes, it is unclear whether the model or the annotate is right:
+Sometimes, it is unclear whether the model or the annotate is right. In the following case, 
+I would say the model is right!
 
 ```zsh
 given: However, convolutional models must be significantly deeper to retrieve the same temporal receptive 
@@ -186,6 +186,10 @@ an HMM-NN system.
 target: Its use in both encoder-decoder and feedforward contexts has led to faster training and state-of-the-art 
 results in translation (via the Transformer<cite> [22]</cite> ), sentiment analysis [25] , and other tasks.
 
-reply: Recently, the mechanism of self-attention<cite> [22,</cite> 24] was proposed, which uses the whole 
-sequence at once to model feature interactions that are arbitrarily distant in time. Its use in both encoder-decoder and feedforward contexts
+reply: Recently, the mechanism of self-attention<cite> [22,</cite> 24] was proposed, 
+which uses the whole sequence at once to model feature interactions that are arbitrarily 
+distant in time. Its use in both encoder-decoder and feedforward contexts has led to 
+faster training and state-of-the-art results in translation (via the Transformer<cite> [22]</cite> ), 
+sentiment analysis [25] , and other tasks. These successes have motivated preliminary work 
+in self-attention for ASR.
 ```

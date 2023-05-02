@@ -1,3 +1,6 @@
+[![](https://img.shields.io/badge/Python-3.9.0-informational)](https://www.python.org/)
+[![](https://img.shields.io/github/license/jstonge/sci_feuds?label=License)](/LICENSE)
+
 # The science of scientific feuds
 
 We are interested in reconstructing fine-grained scientific feuds using large language models (LLMs). We use `group selection theory` as our case study.

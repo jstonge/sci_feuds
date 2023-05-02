@@ -1,18 +1,17 @@
 import json
-# import openai
-# import tiktoken
-import tqdm
-from pathlib import Path
 import re
-from datetime import date
-import spacy
-from tqdm import tqdm
+from pathlib import Path
+
 import pandas as pd
+import spacy
+import tqdm
+from tqdm import tqdm
 
 ROOT_DIR = Path("..")
 OUTPUT_DIR = ROOT_DIR / 'output'
 GROBID_DIR = OUTPUT_DIR / 'group_selection_grobid'
 SPACY_DIR = OUTPUT_DIR / 'spacy_group_selection_grobid'
+
 
 def flatten(l):
     return [item for sublist in l for item in sublist]
@@ -28,6 +27,10 @@ def update_filetodo():
     file2do  = [file for file in file2do if re.sub("(_sent|\.json)", "", str(file).split("/")[-1]) not in done_fname]
     print(f"Remaining {len(file2do)} files")
     return file2do
+
+
+
+# ------------- cleaning data - get spacy representation of group selection feud ------------- #
 
 
 def spacy_parse_feud():    
@@ -78,6 +81,9 @@ def spacy_parse_feud():
 spacy_parse_feud()
 
 
+# ------------ cleaning data - keeping only sentence with entities ----------- #
+
+
 def filter_out_sentence_wo_ent(start=1960, end=2023, by_paragraph=False):
     dfs = []
     df_meta=pd.read_csv(OUTPUT_DIR / "groupSel_feud.csv")
@@ -123,3 +129,21 @@ def filter_out_sentence_wo_ent(start=1960, end=2023, by_paragraph=False):
 yr1, yr2 = 1960, 2023
 df_sent_w_ent2 = filter_out_sentence_wo_ent(start=yr1, end=yr2, by_paragraph=True)
 df_sent_w_ent2.to_csv(SPACY_DIR / f"par_w_ent_{yr1}_{yr2}.csv", index=False)
+
+
+
+# -------------------------- coreference resolution -------------------------- #
+
+
+def flatten(l):
+    return [item for sublist in l for item in sublist]
+
+
+import spacy
+from fastcoref import spacy_component
+
+df=pd.read_csv("par_w_ent_1960_1970.csv")
+nlp = spacy.load("en_core_web_sm", exclude=["parser", "lemmatizer", "ner", "textcat"])
+out=list(nlp.pipe(df.sentence.tolist(), component_cfg={"fastcoref": {'resolve_text': True}}))
+df['coref_sent'] = flatten(out)
+df['coref_sent'] = df['coref_sent'].map(lambda x: x._.resolved_text)

@@ -195,19 +195,107 @@ def print_example(df, mod, max_wc=100, min_wc=0):
 
 print_example(df_todo, model_name3, max_wc=40)
 
+
+# ------------------- validating with group selection feud ------------------- #
+
+# Do we really need to put <cite> </cite> tag around target?
+
 import json
-# validating with group selection feud
+import pandas as pd
+import re
+from pathlib import Path
+
+ROOT_DIR = Path("..")
+DATA_DIR = ROOT_DIR / 'data'
+OUTPUT_DIR = ROOT_DIR / 'output'
+list_fnames = list(OUTPUT_DIR.joinpath('group_selection_grobid').glob("*json"))
+
 model_name = "curie:ft-personal-2023-05-01-19-28-15"
-mydf = pd.read_csv("../output/groupSel_feud.csv")
-mydf = mydf[~mydf.abstract.isna()]
-mydf = mydf[mydf.abstract.str.contains("(wynne|W\.-?E\.)", case=False)].reset_index(drop=True)
+
+# option 1 - use paragraph that we know there is an entityes
+# The only problem is that we can't tag our text with <cite></cite>.
+meta_mydf = pd.read_csv("../output/groupSel_feud.csv")
+meta_mydf = meta_mydf[~meta_mydf.abstract.isna()]
+mydf = pd.read_csv("../output/spacy_group_selection_grobid/par_w_ent_1960_2023.csv")
+mydf.sentence[2]
+
+
+# mydf = mydf[mydf.abstract.str.contains("(wynne|W\.-?E\.)", case=False)].reset_index(drop=True)
 nlp = spacy.load("en_core_web_sm")
-doc = nlp(mydf.abstract[0])
-sents = []
-for sent in doc.sents:
-    sents.append(sent.text)
-myex = ' '.join(sents[0:5]) + '\n\n##\n\n'
-myex = re.sub("Wynne-Edwards", "<cite>Wynne-Edwards</cite>", myex)
+test = mydf.abstract[0]
+
+
+dfs = []
+bib_dfs = []
+for fname in list_fnames:
+    with open(fname) as f:
+        df=json.load(f)
+        break
+        dfs.append(pd.DataFrame(df['pdf_parse']['body_text']))
+        bib_dfs.append(pd.DataFrame(df['pdf_parse']['bib_entries'].values()))
+
+df['pdf_parse']['body_text'][2]
+
+
+single_paper = dfs[0]
+single_paper = single_paper[~single_paper.text.str.contains('This content downloaded')]
+single_paper_bib = bib_dfs[15]
+single_paper_tidy = single_paper.explode("cite_spans")
+
+
+paper_text = single_paper['content'][0]['text']
+single_paper['content'][0]['annotations'].keys()
+
+
+def extract_bibentry():
+    bibentry_test = pd.DataFrame(json.loads(single_paper['content'][0]['annotations']['bibentry']))
+    ref_ids = []
+    matched_papers_id = []
+    for attr in bibentry_test.attributes:
+        # attr =  bibentry_test.attributes[20]
+        ref_ids.append(attr['id'])
+        if attr.get('matched_paper_id'):
+            matched_papers_id.append(attr['matched_paper_id'])
+        else:
+            matched_papers_id.append(None)
+    return pd.DataFrame(zip(ref_ids, matched_papers_id), columns=['ref_id', 'matched_paper_id'])
+
+def extract_authors():
+    authors = []
+    bibauthor_df = pd.DataFrame(json.loads(single_paper['content'][0]['annotations']['bibauthor']))
+    for i, a in bibauthor_df.iterrows():
+        authors.append(re.sub(",$", "", paper_text[bibauthor_df.start[i]:bibauthor_df.end[i]].strip()))
+    return authors
+
+def extract_bibref():
+    bibref_test = pd.DataFrame(json.loads(single_paper['content'][0]['annotations']['bibref']))
+    bibref_test['ref_id'] = bibref_test.attributes.map(lambda x: list(x.values()) if isinstance(x, dict) else None)
+    bib_test = bibref_test.explode("ref_id").drop('attributes', axis=1)
+    return bib_test
+
+single_paper
+pd.DataFrame(json.loads(single_paper['content'][0]['annotations']['bibref']))
+
+bibref_df=extract_bibref()
+bibentry_df=extract_bibentry()
+authors_df=extract_authors()
+
+
+
+mydf['content'][0]['text'][int(bibref_test['start']):int(bibref_test['end'])]
+myex = re.sub("[11]", "<cite>[11]</cite>", mydf['content'][0]['text'][2115:3074])+"\n\n###\n\n"
+
+
+
+def add_cite_tag(x, nlp, window=5):
+    doc = nlp(x)
+    sents = []
+    for sent in doc.sents:
+        sents.append(sent.text)
+    myex = ' '.join(sents[0:window]) + '\n\n##\n\n'
+    myex = re.sub("Wynne-Edwards", "<cite>Wynne-Edwards</cite>", myex)
+
+
 
 mydf=pd.read_json("../data/a97a19ee8eb086df03961634cca804b551cd4a4c.jsonl", lines=True, orient="records")
 mydf['content'][0]['text']
@@ -218,6 +306,9 @@ myex = re.sub("[11]", "<cite>[11]</cite>", mydf['content'][0]['text'][2115:3074]
 res = openai.Completion.create(model=model_name, prompt=myex, temperature=0, max_tokens=500)
 reply_content=re.findall("^ ?.+?(?=END|$)", res.choices[0]['text'], re.DOTALL)[0].strip()
 print(f"given: {myex}\n\nreply: {reply_content}")
+
+
+
 
 
 

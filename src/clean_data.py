@@ -4,8 +4,11 @@ from pathlib import Path
 
 import pandas as pd
 import spacy
-import tqdm
 from tqdm import tqdm
+
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
 
 ROOT_DIR = Path("..")
 OUTPUT_DIR = ROOT_DIR / 'output'
@@ -33,12 +36,110 @@ def update_filetodo():
 # ------------- cleaning data - get spacy representation of group selection feud ------------- #
 
 
+def substite_cite_tag(text, x):
+    """
+    text: string
+    x: cite_span of the form
+      {'start': 187, 'end': 191, 'text': '[20]', 'ref_id': 'BIBREF19'}
+    """
+    # assert x.get("start") and x.get("end") and x.get('text')
+    return text[:x['start']] + "<cite>" + x['text'] + "</cite>" + text[x['end']+1:]
+
+
+def ref_id2name_lookup(x, ref_id_authors):
+    if x is not None:
+        return ref_id_authors[re.sub("IBREF", "", x).lower()]
+
+
+def concat_name(x):
+    if x is None:
+        return None
+    if isinstance(x['middle'], list):
+        return x['first'] + " " + x['last']
+    else:
+        return x['first'] + " " + x['middle'] + " " + x['last']
+
+
+def save_author_observable(tidy_df):
+    sub_df = tidy_df[tidy_df.cite_spans.map(len) > 5]
+    top_15_names = sub_df.value_counts('cite_spans').head(15).reset_index(name='n').cite_spans
+    top_50_names = sub_df.value_counts('cite_spans').head(50).reset_index(name='n').cite_spans
+
+    top_15_df = sub_df.loc[sub_df.cite_spans.isin(top_15_names), ['cite_spans', 'year', 'article']]
+    top_15_df.to_parquet(OUTPUT_DIR/"cited_authors_top_15.parquet", index=False)
+    
+    top_50_df = sub_df.loc[sub_df.cite_spans.isin(top_50_names), ['cite_spans', 'year', 'article']]
+    top_50_df.to_parquet(OUTPUT_DIR/"cited_authors_top_50.parquet", index=False)
+    
+
+def add_cit_tags():
+    file2do = list(GROBID_DIR.glob("*json"))
+    all_cits = []
+    df_meta = pd.read_csv(OUTPUT_DIR/"groupSel_feud.csv", usecols=['citationCounts', 'ID', 'year', 'author'])
+    for article in tqdm(file2do):
+        # article = file2do[2]
+        # print(article)
+        fname = re.sub("\.json", "", str(article).split("/")[-1])
+        
+        with open(article) as f:
+            dat = json.load(f)
+            
+            # Get text from s2orc metadata
+            texts = [_['text'] for _ in dat['pdf_parse']['body_text']]
+            cite_spans = [_['cite_spans'] for _ in dat['pdf_parse']['body_text']]
+            ref_id_authors = {_['ref_id']: _['authors'] for _ in dat['pdf_parse']['bib_entries'].values()}
+            
+            all_texts_cite = []
+            all_spans_cite = []
+            for text, cite_span in zip(texts, cite_spans):
+                # print(cite_span, i)
+                if len(cite_span) > 0:
+                    all_texts_cite.append([substite_cite_tag(text, span) for span in cite_span])
+                    all_spans_cite.append([ref_id2name_lookup(span['ref_id'], ref_id_authors) for span in cite_span])
+                    
+                else:
+                    all_texts_cite.append([])
+                    all_spans_cite.append([])
+        
+        all_cits.append((fname, all_texts_cite, all_spans_cite))
+
+    df_cit = pd.DataFrame(all_cits, columns=['article', 'parsed_doc', 'cite_spans'])
+    df_cit = df_cit.merge(df_meta, how='left', left_on="article", right_on="ID")
+
+    # explode document
+    df_cit_long = df_cit.explode(["parsed_doc", 'cite_spans'])
+    df_cit_long = df_cit_long[df_cit_long.parsed_doc.map(lambda x: len(x) if isinstance(x, list) else 0) > 0]
+    df_cit_long = df_cit_long.reset_index().rename(columns={'index': 'did'})
+
+    # explode paragraphs
+    df_cit_long = df_cit_long.explode(['parsed_doc', 'cite_spans']).reset_index().rename(columns={'index': 'sid'})
+
+    # explode authors
+    df_cit_long = df_cit_long.explode('cite_spans').reset_index().rename(columns={'index': 'aid'})  
+    df_cit_long['cite_spans'] = df_cit_long.cite_spans.map(lambda x: concat_name(x) if isinstance(x, dict) else None)
+
+    # remove any NA
+    df_cit_long = df_cit_long[~df_cit_long.cite_spans.isna()].reset_index(drop=True)
+
+    df_cit_long['year'] = pd.to_datetime(df_cit_long['year'], format="%Y-%m-%d")
+
+    # OBSERVABLE CHECKPOINT
+    save_author_observable(df_cit_long)    
+
+    df_cit_long.to_csv(OUTPUT_DIR/"")
+
+
+ 
+
+
+#! TODO: finish that
 def spacy_parse_feud():    
     file2do = update_filetodo()
     
     if len(file2do) > 0:
         nlp = spacy.load("en_core_web_trf")
         for article in tqdm(file2do):
+            # article=file2do[0]
             all_docs = []
             all_toks = []
             fname = re.sub("\.json", "", str(article).split("/")[-1])
@@ -46,8 +147,10 @@ def spacy_parse_feud():
             
             with open(article) as f:
                 dat = json.load(f)
+                
                 # Get text from s2orc metadata
                 texts = [_['text'] for _ in dat['pdf_parse']['body_text']]
+
                 # Parsed into spacy documents
                 docs = list(nlp.pipe(texts))
                 
@@ -87,8 +190,9 @@ spacy_parse_feud()
 def filter_out_sentence_wo_ent(start=1960, end=2023, by_paragraph=False):
     dfs = []
     df_meta=pd.read_csv(OUTPUT_DIR / "groupSel_feud.csv")
-    
-    for article in tqdm(list(SPACY_DIR.joinpath('sent').glob("*pqt"))):
+    list_fnames = list(SPACY_DIR.joinpath('sent').glob("*pqt"))
+    for article in tqdm(list_fnames):
+        article = list_fnames[0]
         # article = '../output/spacy_group_selection_grobid/sent/nelson_clutch_1966_sent.pqt'
         # article=list(SPACY_DIR.joinpath('sent').glob("*pqt"))[0]
         fname = re.sub("_sent.pqt", "", str(article).split("/")[-1])
@@ -134,9 +238,6 @@ df_sent_w_ent2.to_csv(SPACY_DIR / f"par_w_ent_{yr1}_{yr2}.csv", index=False)
 
 # -------------------------- coreference resolution -------------------------- #
 
-
-def flatten(l):
-    return [item for sublist in l for item in sublist]
 
 
 import spacy

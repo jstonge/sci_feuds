@@ -22,7 +22,7 @@ par_id = df['uniq_id'].map(lambda x: x.split("', ")[0].split("_")[-2])
 article = df['article']
 df["article_par_id"] = article+'_'+par_id
 
-with open("../output/project-25-at-2023-04-26-16-26-86cb0a7a.json") as f:
+with open("../output/groupSel_annotated_labelStudio_2023-04-26.json") as f:
     dat = json.load(f)
 
 def _converter(df_res, source_id, target_id):   

@@ -3,8 +3,6 @@ from pathlib import Path
 
 import openai
 import pandas as pd
-# import spacy
-
 
 ROOT_DIR = Path("..")
 OUTPUT_DIR = ROOT_DIR / 'output'
@@ -96,7 +94,7 @@ print_example(df_todo, best_so_far, max_wc=40)
 best_so_far = "curie:ft-personal-2023-05-01-19-28-15"
 
 
-df = pd.read_parquet(CCA_DIR/"groupSel_feud_with_tag.parquet")
+df = pd.read_parquet(CCA_DIR/"groupSel_feud_with_tag.pqt")
 df = df[~df.parsed_doc.duplicated()]
 df["wc"] = df.parsed_doc.str.count(" ")
 

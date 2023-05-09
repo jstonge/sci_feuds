@@ -23,7 +23,6 @@ output/test_stance.jsonl
 output/groupSel_annotated_labelStudio_2023-04-26.json
 output/*.jsonl
 output/*.json
-output/wandb
 output/.cache_fine_tuned/
 etc/gpt-early-exp/gpt_early_exp_2.ipynb
 
@@ -35,3 +34,6 @@ src/myapikey.txt
 
 output/groupSel_fine_tuned_cca.parquet
 output/groupSel_feud_with_tag
+
+output/wandb
+wandb/

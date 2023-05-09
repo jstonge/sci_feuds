@@ -1,71 +1,39 @@
-import base64
+"""
+Description: 
+ - We put relevant articles in a zotero collection
+ - Given too many text files are missing from S2ORC, we scraped relevant pdf.
+ - 
+"""
 import json
-import os
 import re
 import shutil
 import sys
-import zipfile
-from collections import Counter
-from io import BytesIO
 from pathlib import Path
 from textwrap import wrap
-from time import sleep
 
-import bibtexparser
-import matplotlib.pyplot as plt
 import pandas as pd
 import requests
-import seaborn as sns
 from bson import json_util
 from jsonlines import jsonlines
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 
 from creds import client
 
 sys.path.append("../../s2orc_helpers/s2orc_helpers")
 
-from s2orc_helpers import parse_bibref, parse_res
+from s2orc_helpers import parse_bibref
+
+from helpers import add_cit_tags, get_id_from_url, read_bibtex
 
 ROOT_DIR = Path("../")
-PDF_DIR = ROOT_DIR / 'data' / 'raw_pdfs'
-
+DATA_DIR = ROOT_DIR / 'data'
+PDF_DIR = DATA_DIR / 'raw_pdfs'
+OUTPUT_DIR = ROOT_DIR / 'output'
+GROBID_DIR = OUTPUT_DIR / 'group_selection_grobid'
+SPACY_DIR = OUTPUT_DIR / 'spacy_group_selection_grobid'
+CCA_DIR = OUTPUT_DIR / 'cca'
 
 # ---------------------------------- helpers --------------------------------- #
 
-
-def flatten(l):
-    return [item for sublist in l for item in sublist]
-
-def read_bibtex(fname):
-    with open(fname) as bibtex_file:
-        bib_database = bibtexparser.load(bibtex_file)
-    return bib_database
-
-def get_seeds_fight_papers():
-    
-    bib_database = read_bibtex('../data/scientific_feuds.bib')
-
-    assert all([p.get('keywords') is not None for p in bib_database.entries]), 'all papers must be labeled with a feud'
-
-    # need to be connected to uvm server to work
-    db = client['papersDB']
-    
-    # we want to find the semantic scholar paperIds + full metadata about paper
-    urls = ["https://www.semanticscholar.org/paper/"+re.sub("paper\\\\_id\.", "", _['annote']) 
-            for _ in bib_database.entries if _.get('annote')]
-
-    all_pids = [db.papers.find_one({'url': u}) for u in urls]
-
-    for i,pid in enumerate(all_pids):
-        print(i)
-        pid['zot_id'] = bib_database.entries[i]['ID']
-        pid['zot_keywords'] = bib_database.entries[i]['keywords']
-
-    json_dump  = json_util.dumps(all_pids)
-
-    with jsonlines.open('../data/seeds_fights_papers.jsonl', mode='w') as writer:
-        writer.write(json.loads(json_dump))
 
 def get_citation_graph(paper) -> None:
     # paper = feud_seeds[13]
@@ -128,9 +96,6 @@ def get_papers():
             for paper in out:
                 json.dump(json.loads(json_util.dumps(paper)), fout)
                 fout.write('\n')
-
-def get_id_from_url(x):
-    return re.sub("https://www.semanticscholar.org/paper/", "", x)
 
 def id2shortname():   
 
@@ -215,137 +180,58 @@ def print_summary():
     print(f"debate: {target_paper[0]['zot_keywords']}", end="\n")
     print(f"citation count: {target_paper[0]['citationcount']} (we have {len(all_citations)})")
 
-def install_addon(self, path, temporary=False) -> str:
-    """Installs Firefox addon."""
 
-    if os.path.isdir(path):
-        fp = BytesIO()
-        path_root = len(path) + 1  # account for trailing slash
-        with zipfile.ZipFile(fp, "w", zipfile.ZIP_DEFLATED) as zipped:
-            for base, dirs, files in os.walk(path):
-                for fyle in files:
-                    filename = os.path.join(base, fyle)
-                    zipped.write(filename, filename[path_root:])
-        addon = base64.b64encode(fp.getvalue()).decode("UTF-8")
-    else:
-        with open(path, "rb") as file:
-            addon = base64.b64encode(file.read()).decode("UTF-8")
-
-    payload = {"addon": addon, "temporary": temporary}
-    return self.execute("INSTALL_ADDON", payload)["value"]
+# ----------------------------- checking the raw data ---------------------------- #
 
 
-# ----------------------------------------------------------------------------- #
+bibdatabase = read_bibtex(DATA_DIR / 'group_selection.bib')
 
-def update_paper_from_s2orc():
-    """
-    As we add new papers to a feud, we want to get their citation graph
-    without rerunning those that we already have
-    """
-    # Step 1. Get feud seeds metadata
-    get_seeds_fight_papers()
-
-    # Step 2. Get citation graph of the feud seeds
-    with jsonlines.open("../data/seeds_fights_papers.jsonl") as f:
-        feud_seeds = f.read()
-
-    done_citation_graph = set([re.sub(".jsonl", "", str(_).split("/")[-1]) for _ in Path('../feuds').glob("*jsonl")])
-    feuds_to_do = [feud for feud in feud_seeds if get_id_from_url(feud['url']) not in done_citation_graph]
-
-    for paper in feuds_to_do:
-        get_citation_graph(paper)
-        sleep(10)
-
-    # Step 3. Get all the papers
-    get_papers()
-
-update_paper_from_s2orc()
-
-
-# -------------------- Scrapping group selection feud ------------------------- #
-
-
-# Since paper coverage for group selection feud is not great, we need to scrape
-# the PDFs and parse them. This is time consuming and we do it semi-manually.
-
-
-with jsonlines.open("../data/seeds_fights_papers.jsonl") as f:
-    feud_seeds = f.read()
-
-all_pids = [get_id_from_url(f['url']) for f in feud_seeds]
-
-pid='9bec2ca8875bf7179e6b3371b5328a6af5af55de' # group selection pid
-target_paper = [_ for _ in feud_seeds if get_id_from_url(_['url']) == pid]
-meta_papers=read_meta_papers(pid)
-len(meta_papers) # we know about 1875 papers for group selection feud
-
-urls2get =  ["https://www.semanticscholar.org/paper/"+p['citingPaper']['paperId'] for p in meta_papers if p['citingPaper'].get('paperId')]
-
-
-driver = webdriver.Firefox()
-
-driver.install_addon("../dl?browser=firefox&version=5.0.107", temporary=True)
-driver.get("about:support")
-addons = driver.find_element(By.XPATH, '//*[contains(text(),"Add-ons") and not(contains(text(),"with"))]')
-driver.execute_script("arguments[0].scrollIntoView();", addons)
-
-driver.get(urls2get[1872])
-driver.quit()
-
-
-# ----------------------------- checking the data ---------------------------- #
-
-
-bibdatabase = read_bibtex('../data/group_selection.bib')
-
-# Some things to look at
 # Pdfs duplicated by entry 
+
+local_zotero_storage = "/home/jstonge/Zotero/storage"
 
 dup_pdfs = [e['file'] if e.get('file') else None for e in bibdatabase.entries 
             if e.get('file') 
-            and len(re.findall("/home/jstonge/Zotero/storage/\w+", e['file'])) > 1]
+            and len(re.findall(f"{local_zotero_storage}/\w+", e['file'])) > 1]
 
 
+# Some problems with the data
+#  - Entries without paperIds, or wrong value.
+#    >>> {_['ID']: _['annote'] for _ in bibdatabase.entries if len(_['annote']) != 50}
+#  - Duplicated titles
+#    >>> all_titles = [entry['title'].lower() for entry in bibdatabase.entries]
+#    >>> titles_counts = Counter(all_titles)
+#    >>> {k:v for k,v in titles_counts.items() if v != 1}
+#  - Extracting Citation; 
+#    - Books have parsing other than citation counts in extra
+#      >>> no_cit_count = [entry for entry in bibdatabase.entries if entry.get('note') and len(entry.get('note')) == 1]
 
-# Entries without paperIds, or wrong value.
-# {_['ID']: _['annote'] for _ in bibdatabase.entries if len(_['annote']) != 50}
 
-# Duplicated titles
-all_titles = [entry['title'].lower() for entry in bibdatabase.entries]
-titles_counts = Counter(all_titles)
-{k:v for k,v in titles_counts.items() if v != 1}
+# ------------------------- create metadata dataframe ------------------------ #
 
-# Extracting Citation
-# Books have parsing other than citation counts in extra
-# no_cit_count = [entry for entry in bibdatabase.entries if entry.get('note') and len(entry.get('note')) == 1]
 
-def create_df_from_bib():
+def create_meta_df_from_bib():
     ids = [e['ID'] for e in bibdatabase.entries]
     titles = [e['title'] for e in bibdatabase.entries]
     years = [f"{e['year']}-01-01" for e in bibdatabase.entries]
     abstracts = ["\n".join(wrap(e['abstract'], width=200)) if e.get('abstract') else None for e in bibdatabase.entries]
     cit_counts = [int(re.findall("^\d+", entry['note'])[0]) if entry.get('note') and len(re.findall("^\d+", entry['note'])) > 0 else 0  for entry in bibdatabase.entries]
     authors = [e.get('author') for e in bibdatabase.entries]
-    pd.DataFrame({'citationCounts': cit_counts, 'ID': ids, 'title': titles, 'year': years, 'abstract': abstracts, 'author': authors}).to_csv("groupSel_feud.csv", index=False)
-
-create_df_from_bib()
-
-# EDA - plot to do
-# - [x] Plotting feud overall pattern based only on citation graph
-# - [ ] coverage by decade: bar plot of how many article articles we have with opacity indicating the number of parsed text we have
-# - [ ] field of studies/journals: fos participating to the debate
-
-# Once we have each mention + their scores
-# - [ ] Pairwise interactions (plot distribution of valence)
+    pd.DataFrame({'citationCounts': cit_counts, 'ID': ids, 'title': titles, 'year': years, 'abstract': abstracts, 'author': authors})\
+      .to_csv(OUTPUT_DIR / "groupSel_feud.csv", index=False)
 
 
-# ------------------------------- Parsing pdfs ------------------------------- #
+create_meta_df_from_bib()
+
+
+# ------------------------------- wrangling pdfs ------------------------------- #
 
 
 def mv_and_rename_pdfs_in_proj():
     """
-    For some entry, we have multiple pdfs. We simply grab the first one at
-    the moment.
+    For some entry, we have multiple pdfs. 
+    We simply grab the first one at the moment.
+    We rename pdfs to be `short_id` from S2ORC
     """
     bib = read_bibtex('../data/group_selection.bib')
 
@@ -372,41 +258,109 @@ def mv_and_rename_pdfs_in_proj():
 mv_and_rename_pdfs_in_proj()
 
 
+# ------------------------------ GROBID parsing ------------------------------ #
+
+# Now that we have the pdf scrapped and renamed after metdata in S2ORC, 
+# we use the parser from [s2orc-doc2json](https://github.com/allenai/s2orc-doc2json).
+# We store the output in `output/group_selection_grobid`.
+
+#! for file in group_selection/*pdf; do python process_pdf.py -i $file  -t temp_dir/ -o output_dir/; done
+
+
+# ----------------------------- add citation tags ---------------------------- #
+
+
+df_meta = pd.read_csv(OUTPUT_DIR/"groupSel_feud.csv", usecols=['citationCounts', 'ID', 'year', 'author'])
+
+add_cit_tags(GROBID_DIR, df_meta, OUTPUT_DIR)
+
+
+
+# checkpoint observable
+def save_author_observable(tidy_df):
+    sub_df = tidy_df[tidy_df.cite_spans.map(len) > 5]
+    top_15_names = sub_df.value_counts('cite_spans').head(15).reset_index(name='n').cite_spans
+    top_50_names = sub_df.value_counts('cite_spans').head(50).reset_index(name='n').cite_spans
+
+    top_15_df = sub_df.loc[sub_df.cite_spans.isin(top_15_names), ['cite_spans', 'year', 'article']]
+    top_15_df.to_parquet(OUTPUT_DIR/"cited_authors_top_15.parquet", index=False)
+    
+    top_50_df = sub_df.loc[sub_df.cite_spans.isin(top_50_names), ['cite_spans', 'year', 'article']]
+    top_50_df.to_parquet(OUTPUT_DIR/"cited_authors_top_50.parquet", index=False)
+
+df_cit_long = pd.read_parquet(CCA_DIR / "groupSel_feud_with_tag.parquet")
+save_author_observable(df_cit_long)
+
+
+
+
+
+
+
+
+
 # --------------------- Examining results at paper level ---------------------------- #
 
 
-with jsonlines.open("../data/seeds_fights_papers.jsonl") as f:
-    feud_seeds = f.read()
+# with jsonlines.open("../data/seeds_fights_papers.jsonl") as f:
+#     feud_seeds = f.read()
 
-all_pids = [get_id_from_url(f['url']) for f in feud_seeds]
+# all_pids = [get_id_from_url(f['url']) for f in feud_seeds]
 
-pid='9bec2ca8875bf7179e6b3371b5328a6af5af55de'
-target_paper = [_ for _ in feud_seeds if get_id_from_url(_['url']) == pid]
-meta_papers=read_meta_papers(pid)
-papers=read_papers(pid)
-all_citations = [parse_bibref(p, meta_papers, target_paper[0]) for p in papers]
+# pid='9bec2ca8875bf7179e6b3371b5328a6af5af55de'
+# target_paper = [_ for _ in feud_seeds if get_id_from_url(_['url']) == pid]
+# meta_papers=read_meta_papers(pid)
+# papers=read_papers(pid)
+# all_citations = [parse_bibref(p, meta_papers, target_paper[0]) for p in papers]
 
-print_summary()
+# print_summary()
 
-def plot_all():
-    dfs = []
+# def plot_all():
+#     dfs = []
     
-    for pid in all_pids:
-        print(pid)
-        target_paper = [_ for _ in feud_seeds if get_id_from_url(_['url']) == pid]
-        meta_papers=read_meta_papers(pid)
-        papers=read_papers(pid)
+#     for pid in all_pids:
+#         print(pid)
+#         target_paper = [_ for _ in feud_seeds if get_id_from_url(_['url']) == pid]
+#         meta_papers=read_meta_papers(pid)
+#         papers=read_papers(pid)
         
-        all_citations = [parse_bibref(p, meta_papers, target_paper[0]) for p in papers]
+#         all_citations = [parse_bibref(p, meta_papers, target_paper[0]) for p in papers]
         
-        # [f"Paper {i} cites {len(cit['citations'])}" for i, cit in enumerate(all_citations) if cit is not None and cit.get('citations')]
+#         # [f"Paper {i} cites {len(cit['citations'])}" for i, cit in enumerate(all_citations) if cit is not None and cit.get('citations')]
 
-        count_cit = Counter([len(c['citations']) for c in all_citations if c is not None])
+#         count_cit = Counter([len(c['citations']) for c in all_citations if c is not None])
         
-        dfs.append(
-            pd.DataFrame({'k': count_cit.keys(), 'n':count_cit.values(), 'pid': pid})
-        )
+#         dfs.append(
+#             pd.DataFrame({'k': count_cit.keys(), 'n':count_cit.values(), 'pid': pid})
+#         )
 
 
-    dfs = pd.concat(dfs, axis=0)
-    sns.ecdfplot(x='k', data=dfs)
+#     dfs = pd.concat(dfs, axis=0)
+#     sns.ecdfplot(x='k', data=dfs)
+
+
+# ----------------------------------------------------------------------------- #
+
+# def update_paper_from_s2orc():
+#     """
+#     As we add new papers to a feud, we want to get their citation graph
+#     without rerunning those that we already have
+#     """
+#     # Step 1. Get feud seeds metadata
+#     get_seeds_fight_papers()
+
+#     # Step 2. Get citation graph of the feud seeds
+#     with jsonlines.open("../data/seeds_fights_papers.jsonl") as f:
+#         feud_seeds = f.read()
+
+#     done_citation_graph = set([re.sub(".jsonl", "", str(_).split("/")[-1]) for _ in Path('../feuds').glob("*jsonl")])
+#     feuds_to_do = [feud for feud in feud_seeds if get_id_from_url(feud['url']) not in done_citation_graph]
+
+#     for paper in feuds_to_do:
+#         get_citation_graph(paper)
+#         sleep(10)
+
+#     # Step 3. Get all the papers
+#     get_papers()
+    
+# update_paper_from_s2orc()

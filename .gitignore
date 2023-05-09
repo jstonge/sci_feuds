@@ -30,3 +30,8 @@ etc/gpt-early-exp/gpt_early_exp_2.ipynb
 output/cca/
 output/stance_detection/
 output/old/
+src/__pycache__/
+src/myapikey.txt
+
+output/groupSel_fine_tuned_cca.parquet
+output/groupSel_feud_with_tag

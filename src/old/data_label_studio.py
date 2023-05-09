@@ -8,10 +8,7 @@ OUTPUT_DIR = ROOT_DIR / 'output'
 GROBID_DIR = OUTPUT_DIR / 'group_selection_grobid'
 SPACY_DIR = OUTPUT_DIR / 'spacy_group_selection_grobid'
 
-
-def flatten(l):
-    return [item for sublist in l for item in sublist]
-
+from helpers import flatten
 
 # ----------------- extracting labelled data in a tidy format ---------------- #
 

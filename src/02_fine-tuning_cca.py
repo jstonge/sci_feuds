@@ -13,130 +13,58 @@ CCA_DIR = OUTPUT_DIR / 'cca'
 openai.api_key = open("myapikey.txt", "r").read().strip("\n")
 
 
-def call_openai(x):
-    return openai.Completion.create(model=best_so_far, prompt=x + "\n\n###\n\n", temperature=0, max_tokens=700)
+def prep_data():
 
-def parse_reply(x):
-    return re.findall("^ ?.+?(?=END|$)", x.choices[0]['text'], re.DOTALL)[0].strip()
+    # We use citation window = 5
+    df_5 = pd.concat([pd.read_json(CCA_DIR / f"{x}_5.json") for x in ['train', 'test', 'dev']], axis=0)
+    df_gold = pd.concat([pd.read_json(CCA_DIR / f"{x}_gold.json") for x in ['train', 'test', 'dev']], axis=0)
+    df_combined = df_5.merge(df_gold, on='id', how='left', suffixes=['_5', '_gold'])
 
+    # at first we just sampled at random
+    # df_prompt_completion_1 = pd.read_csv(f"../output/.cache_fine_tuned/first_iteration_cca_2023-05-01.csv", names=['index', 'prompt', 'completion'], skiprows=1, index_col='index')
+    # only the longest sentences b/c our model struggled with it
+    # df_prompt_completion_3 = pd.read_csv(f"../output/.cache_fine_tuned/third_iteration_cca_2023-05-01.csv", names=['index', 'prompt', 'completion'], skiprows=1, index_col='index')
+    # df_prompt_completion = pd.concat([df_prompt_completion_1, df_prompt_completion_3], axis=0)
 
-# 1. prepare dataset
+    # done_idx = df_combined.loc[df_prompt_completion.index, :].id
+    # df_combined = df_combined[df_combined.id.isin(done_idx)]
 
-# We use citation window = 5
-df_5 = pd.concat([pd.read_json(CCA_DIR / f"/{x}_5.json") for x in ['train', 'test', 'dev']], axis=0)
-df_gold = pd.concat([pd.read_json(CCA_DIR / f"{x}_gold.json") for x in ['train', 'test', 'dev']], axis=0)
-df_combined = df_5.merge(df_gold, on='id', how='left', suffixes=['_5', '_gold'])
+    prompt = df_combined.x_5.map(lambda x: str(x) + "\n\n###\n\n")
+    completion = df_combined.x_gold.map(lambda x: " " + str(x) + "END")
 
-prompt = df_combined.x_5.map(lambda x: str(x) + "\n\n###\n\n")
-completion = df_combined.x_gold.map(lambda x: " " + str(x) + "END")
+    df_prompt_completion = pd.DataFrame(zip(prompt, completion), columns=['prompt', 'completion'])
 
-df_prompt_completion = pd.DataFrame(zip(prompt, completion), columns=['prompt', 'completion']).sample(2000)
+    df_prompt_completion.to_json("../output/context_detection_2023-05-05.jsonl", lines=True, orient='records')
 
-# old
-# df_prompt_completion = df_combined[df_combined.id.isin(df_todo.id)]
-# df_prompt_completion = df_prompt_completion[df_prompt_completion.x_gold.str.count(" ") > 40]
-# df_prompt_completion = df_prompt_completion.sample(2000)
-
-df_prompt_completion.to_json("../output/context_detection3.jsonl", lines=True, orient='records')
-
-# checkpoint
-# df_prompt_completion.to_csv(f"../output/.cache_fine_tuned/third_iteration_cca_{str(date.today())}.csv")
+    # saving what we did so far. To update
+    # df_prompt_completion.to_csv(f"../output/.cache_fine_tuned/third_iteration_cca_{str(date.today())}.csv")
 
 
-# 2. train the model
-
-# file_name = CCA_DIR / "context_detection_2023-05-05_prepared.jsonl"
-
-# upload_response = openai.File.create(
-#   file=open(file_name, "rb"),
-#   purpose='fine-tune',
-#   api_key=openai.api_key
-# )
-
-# file_id = upload_response.id
-
-# response = openai.FineTune.create(training_file=file_id, model="Curie")
+# fine tuning
+#! openai tools fine_tunes.prepare_data -f context_detection_2023-05-08.jsonl
+#! openai -k "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" fine_tunes.create -m curie -t "context_detection_2023-05-05_prepared.jsonl"
 
 
-# 3. validating the model on multicite annotated data
+# Validating the model by comparing with multicite annotated data
+# best_so_far = "curie:ft-personal-2023-05-01-23-05-22"
 
-df_prompt_completion_1 = pd.read_csv(f"../output/.cache_fine_tuned/first_iteration_cca_2023-05-01.csv", names=['index', 'prompt', 'completion'], skiprows=1, index_col='index')
-df_prompt_completion_3 = pd.read_csv(f"../output/.cache_fine_tuned/third_iteration_cca_2023-05-01.csv", names=['index', 'prompt', 'completion'], skiprows=1, index_col='index')
-df_prompt_completion = pd.concat([df_prompt_completion_1, df_prompt_completion_3], axis=0)
-
-done_idx = df_combined.loc[df_prompt_completion.index, :].id
-df_todo = df_combined[~df_combined.id.isin(done_idx)]
-
-# model_name  = "curie:ft-personal-2023-05-01-19-28-15"
-# model_name2 = "curie:ft-personal-2023-05-01-22-25-51"
-best_so_far = "curie:ft-personal-2023-05-01-23-05-22"
-
-def print_example(df, mod, max_wc=100, min_wc=0):
-    df = df[(df.x_gold.str.count(" ") >= min_wc) & (df.x_gold.str.count(" ") <= max_wc)]
-    # rdm_idx = df.sample(1).index[0]
-    rdm_idx = 6901
+# def print_example(df, mod, max_wc=100, min_wc=0):
+#     df = df[(df.x_gold.str.count(" ") >= min_wc) & (df.x_gold.str.count(" ") <= max_wc)]
+#     # rdm_idx = df.sample(1).index[0]
+#     rdm_idx = 6901
     
-    test1 = " However, convolutional models must be significantly deeper to retrieve the same temporal receptive field [23] . Recently, the mechanism of self-attention<cite> [22,</cite> 24] was proposed, which uses the whole sequence at once to model feature interactions that are arbitrarily distant in time. Its use in both encoder-decoder and feedforward contexts has led to faster training and state-of-the-art results in translation (via the Transformer<cite> [22]</cite> ), sentiment analysis [25] , and other tasks. These successes have motivated preliminary work in self-attention for ASR. Time-restricted self-attention was used as a drop-in replacement for individual layers in the state-of-theart lattice-free MMI model [26] , an HMM-NN system."
-    target_x = "Its use in both encoder-decoder and feedforward contexts has led to faster training and state-of-the-art results in translation (via the Transformer<cite> [22]</cite> ), sentiment analysis [25] , and other tasks."
-    # test1 = df_todo[rdm_idx]
-    # target_x = df_todo[rdm_idx]
+#     test1 = " However, convolutional models must be significantly deeper to retrieve the same temporal receptive field [23] . Recently, the mechanism of self-attention<cite> [22,</cite> 24] was proposed, which uses the whole sequence at once to model feature interactions that are arbitrarily distant in time. Its use in both encoder-decoder and feedforward contexts has led to faster training and state-of-the-art results in translation (via the Transformer<cite> [22]</cite> ), sentiment analysis [25] , and other tasks. These successes have motivated preliminary work in self-attention for ASR. Time-restricted self-attention was used as a drop-in replacement for individual layers in the state-of-theart lattice-free MMI model [26] , an HMM-NN system."
+#     target_x = "Its use in both encoder-decoder and feedforward contexts has led to faster training and state-of-the-art results in translation (via the Transformer<cite> [22]</cite> ), sentiment analysis [25] , and other tasks."
+#     # test1 = df_todo[rdm_idx]
+#     # target_x = df_todo[rdm_idx]
 
-    res = openai.Completion.create(model=mod, prompt=test1 + "\n\n###\n\n", temperature=0, max_tokens=500)
-    reply_content=re.findall("^ ?.+?(?=END|$)", res.choices[0]['text'], re.DOTALL)[0].strip()
-    print(f"rdm_idx: {rdm_idx}\n\ngiven: {test1}\n\ntarget: {target_x}\n\nreply: {reply_content}")
-
-print_example(df_todo, best_so_far, max_wc=40)
-
-
-# ------------------- validating with group selection feud ------------------- #
-
-
-best_so_far = "curie:ft-personal-2023-05-01-19-28-15"
-
-
-df = pd.read_parquet(CCA_DIR/"groupSel_feud_with_tag.pqt")
-df = df[~df.parsed_doc.duplicated()]
-df["wc"] = df.parsed_doc.str.count(" ")
-
-# def print_example_groupSel(df, mod, max_wc=100, min_wc=0):
-#     min_wc, max_wc = 150, 200
-#     df_todo = df[(df.wc >= min_wc) & (df.wc <= max_wc)]
-#     rdm_idx = df_todo.sample(1).index[0]
-#     prompt = df_todo.loc[rdm_idx,'parsed_doc']
-
-#     res = openai.Completion.create(model=mod, prompt=prompt + "\n\n###\n\n", temperature=0, max_tokens=500)
+#     res = openai.Completion.create(model=mod, prompt=test1 + "\n\n###\n\n", temperature=0, max_tokens=500)
 #     reply_content=re.findall("^ ?.+?(?=END|$)", res.choices[0]['text'], re.DOTALL)[0].strip()
-#     print(f"rdm_idx: {rdm_idx}\n\ngiven: {prompt}\n\nreply: {reply_content}")
+#     print(f"rdm_idx: {rdm_idx}\n\ngiven: {test1}\n\ntarget: {target_x}\n\nreply: {reply_content}")
 
-# print_example_groupSel(df_todo, model_name3, max_wc=40)
-
-we_df = df[df.cite_spans.str.contains("Wynne")]
+# print_example(df_todo, best_so_far, max_wc=40)
 
 
-we_df = we_df[we_df['wc'] < 500]
-
-
-we_prompts = we_df.parsed_doc.map(call_openai)
-
-
-example = we_prompts.map(parse_reply)
-
-we_df['relevant_contexts'] = example
-
-we_df.to_parquet("groupSel_fine_tuned_cca.parquet", index=False)
-
-
-def show_examples():
-    tmp_df = we_df.reset_index()
-    rdm_idx = tmp_df.sample(1)['index']
-    print(f"given: {tmp_df.parsed_doc[rdm_idx].tolist()}\n")
-    print(f"reply: {tmp_df['relevant_contexts'][rdm_idx].tolist()}")
-
-show_examples()
-
-
-
-we_df = pd.read_parquet("groupSel_fine_tuned_cca.parquet")
 
 
 

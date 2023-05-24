@@ -52,7 +52,7 @@ def prep_data(n_classes=3, balanced=True, thresh_wc=550):
     df_prompt_completion.value_counts("completion")
 
     # save to `output/stance_detection` directory
-    df_prompt_completion.to_json(STANCE_DIR / "stance_detection_balanced_5catego_2023-05-08.jsonl", lines=True, orient='records')
+    df_prompt_completion.to_json(STANCE_DIR / "stance_detection_unbalanced_5catego_2023-05-08.jsonl", lines=True, orient='records')
 
 
 # Prepare data using openAI cli
@@ -75,15 +75,23 @@ def prep_data(n_classes=3, balanced=True, thresh_wc=550):
 #                              --classification_n_classes 3
 
 
+
+
+
+
+
+
 # Validating fine-tuned model
 # !openai wandb sync
 
 best_model_so_far_3 = "curie:ft-personal-2023-05-08-21-10-03"
 # best_model_so_far_5 = "curie:ft-personal-2023-05-09-23-14-24"
-best_model_so_far_5 = "curie:ft-personal-2023-05-08-19-17-01"
-best_model_so_far_id_3 = "ft-F2HCJCsDcXnUodzu37pongJf"
-# best_model_so_far_id_5 = "ft-fWXcntKe6ctUxxG2GANyneXJ"
-best_model_so_far_id_5 = "ft-FrUEGnWr4iGrIPpuYKDunfJ0"
+best_model_so_far_5 = "curie:ft-personal-2023-05-08-19-17-01" 
+
+best_model_so_far_id_3 = "ft-F2HCJCsDcXnUodzu37pongJf"   # 3/balanced/curie
+# best_model_so_far_id_5 = "ft-fWXcntKe6ctUxxG2GANyneXJ" # 5/balanced/curie
+best_model_so_far_id_5 = "ft-FrUEGnWr4iGrIPpuYKDunfJ0" # 5/unbalanced/curie*
+best_model_so_far_id_5 = "ft-CaL8qTKKA3gtbSWsVmr1vDQU" # 5/unbalanced/ada
 
 def simple_validate(n_classes=5):
     """only 5 classes model. When n_classes=3 and balanced, the random pick = 33%"""
@@ -100,7 +108,7 @@ res = pd.read_csv(STANCE_DIR / f"classif_metric_{best_model_so_far_id_5}.csv")
 
 res[res['classification/accuracy'].notnull()].tail(1) # acc(3cat)=75%; acc(5cat but unbalanced)=64% (same weighted_f1_score)
 # F1-score: (2 * (Precision * Recall))/(Precision + Recall); is it the same than 
-res[res['classification/accuracy'].notnull()]['classification/accuracy'].plot()
+res[res['classification/weighted_f1_score'].notnull()]['classification/weighted_f1_score'].plot()
 
 # About wandb:
 # see https://wandb.ai/borisd13/GPT-3/reports/GPT-3-exploration-fine-tuning-tips--VmlldzoxNDYwODA2?utm_source=fully_connected&utm_medium=blog&utm_campaign=openai+gpt-3

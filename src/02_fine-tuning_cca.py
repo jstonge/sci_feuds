@@ -46,6 +46,10 @@ def prep_data():
 
 
 # Validating the model by comparing with multicite annotated data
+best_so_far = "curie:ft-personal-2023-05-01-19-28-15"
+df_gold = pd.concat([pd.read_json(CCA_DIR / f"{x}_gold.json") for x in ['train', 'test', 'dev']], axis=0)
+
+
 # best_so_far = "curie:ft-personal-2023-05-01-23-05-22"
 
 # def print_example(df, mod, max_wc=100, min_wc=0):

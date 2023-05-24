@@ -37,3 +37,6 @@ output/groupSel_feud_with_tag
 
 output/wandb
 wandb/
+notebook/project_walkthrough_files/
+output/My-Predictions2_with_multicite.parquet
+output/groupSel_feud_with_tag.parquet

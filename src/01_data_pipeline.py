@@ -10,6 +10,7 @@ import shutil
 import sys
 from pathlib import Path
 from textwrap import wrap
+from tqdm import tqdm
 
 import pandas as pd
 import requests
@@ -22,7 +23,7 @@ sys.path.append("../../s2orc_helpers/s2orc_helpers")
 
 from s2orc_helpers import parse_bibref
 
-from helpers import add_cit_tags, get_id_from_url, read_bibtex
+from helpers import get_id_from_url, read_bibtex, substite_cite_tag, concat_name, ref_id2name_lookup
 
 ROOT_DIR = Path("../")
 DATA_DIR = ROOT_DIR / 'data'
@@ -271,6 +272,65 @@ mv_and_rename_pdfs_in_proj()
 
 
 df_meta = pd.read_csv(OUTPUT_DIR/"groupSel_feud.csv", usecols=['citationCounts', 'ID', 'year', 'author'])
+
+def add_cit_tags():
+    file2do = list(GROBID_DIR.glob("*json"))
+    all_cits = []
+    # df_meta = pd.read_csv(OUTPUT_DIR/"groupSel_feud.csv", usecols=['citationCounts', 'ID', 'year', 'author'])
+    for article in tqdm(file2do):
+        # article = file2do[0]
+        # print(article)
+        fname = re.sub("\.json", "", str(article).split("/")[-1])
+        
+        with open(article) as f:
+            dat = json.load(f)
+            
+            # Get text from s2orc metadata
+            texts = [_['text'] for _ in dat['pdf_parse']['body_text']]
+            cite_spans = [_['cite_spans'] for _ in dat['pdf_parse']['body_text']]
+            ref_id_authors = {_['ref_id']: _['authors'] for _ in dat['pdf_parse']['bib_entries'].values()}
+            
+            all_texts_cite = []
+            all_spans_cite = []
+            for text, cite_span in zip(texts, cite_spans):
+                # print(cite_span, i)
+                # text = texts[4]
+                # cite_span = cite_spans[4]
+                if len(cite_span) > 0:
+                    text_with_tags = [substite_cite_tag(text, span) for span in cite_span]
+                    all_texts_cite.append(text_with_tags)
+                    all_spans_cite.append([ref_id2name_lookup(span['ref_id'], ref_id_authors) for span in cite_span])
+                else:
+                    all_texts_cite.append([])
+                    all_spans_cite.append([])
+        
+        all_cits.append((fname, all_texts_cite, all_spans_cite))
+
+    df_cit = pd.DataFrame(all_cits, columns=['article', 'parsed_doc', 'cite_spans'])
+    df_cit = df_cit.merge(df_meta, how='left', left_on="article", right_on="ID")
+    
+    # explode document & cite_spans
+    df_cit_long = df_cit.explode(["parsed_doc", 'cite_spans'])
+    df_cit_long = df_cit_long[df_cit_long.parsed_doc.map(lambda x: len(x) if isinstance(x, list) else 0) > 0]
+    df_cit_long = df_cit_long.reset_index().rename(columns={'index': 'did'})
+
+    # explode paragraphs
+    df_cit_long = df_cit_long.explode(['parsed_doc', 'cite_spans']).reset_index().rename(columns={'index': 'sid'})
+
+    # explode authors
+    df_cit_long = df_cit_long.explode('cite_spans').reset_index().rename(columns={'index': 'aid'})  
+    df_cit_long['cite_spans'] = df_cit_long.cite_spans.map(lambda x: concat_name(x) if isinstance(x, dict) else None)
+
+    # remove any NA
+    df_cit_long = df_cit_long[~df_cit_long.cite_spans.isna()].reset_index(drop=True)
+
+    df_cit_long['year'] = pd.to_datetime(df_cit_long['year'], format="%Y-%m-%d")
+
+    # remove duplicated
+    df_cit_long = df_cit_long[~df_cit_long.duplicated(['did', 'sid', 'aid'])]
+
+    df_cit_long.to_parquet(OUTPUT_DIR / "groupSel_feud_with_tag.parquet", index=False)
+
 
 add_cit_tags(GROBID_DIR, df_meta, OUTPUT_DIR)
 
